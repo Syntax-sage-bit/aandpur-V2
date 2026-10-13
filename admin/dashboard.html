@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard · Aandpur</title><link rel="stylesheet" href="../css/style.css"></head>
+<body data-page="admin">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">A</span><span><b>Aandpur</b><small>LEARNING PLATFORM</small></span></a>
+    <div class="nav-label">MANAGEMENT</div>
+    <nav class="side-nav">
+      <a class="nav-item active" href="dashboard.html"><span>▦</span> Overview</a>
+      <a class="nav-item" href="#" data-demo="Classes management"><span>▤</span> Classes <span class="nav-count">01</span></a>
+      <a class="nav-item" href="#" data-demo="Subjects management"><span>◈</span> Subjects <span class="nav-count">03</span></a>
+      <a class="nav-item" href="#" data-demo="Chapters management"><span>≡</span> Chapters</a>
+      <a class="nav-item" href="#" data-demo="Notes management"><span>▧</span> Notes</a>
+      <a class="nav-item" href="#" data-demo="Questions management"><span>☷</span> Questions</a>
+      <a class="nav-item" href="#" data-demo="Quiz management"><span>✦</span> Quizzes</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="sidebar-tip admin-tip"><span class="tip-symbol">✦</span><b>Keep it organised.</b><p>Great learning starts with great content.</p></div><a class="nav-item" href="../index.html"><span>↪</span> Back to portal</a></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><button class="mobile-menu" data-menu-toggle aria-label="Open menu">☰</button><div class="crumb">Management <span>/</span> Overview</div><div class="top-actions"><button class="icon-btn" data-theme-toggle title="Toggle theme">◐</button><span class="top-divider"></span><div class="user-chip"><span class="avatar admin-avatar">AD</span><span class="user-meta"><b>Workspace Admin</b><small>Administrator</small></span></div></div></header>
+    <div class="page-content">
+      <div class="welcome-row admin-welcome"><div><div class="eyebrow">ADMIN WORKSPACE / OVERVIEW</div><h1>Good morning, Admin <span class="wave">✦</span></h1><p class="muted">Here’s a quick look at your learning platform.</p></div><button class="primary-button" data-demo="Create new content"><span>＋</span> Create content</button></div>
+      <section class="stats-grid admin-stats">
+        <article class="stat-card"><div class="stat-top"><span class="stat-icon blue">▦</span><span class="trend">↗ Setup</span></div><strong>01</strong><span class="stat-label">Total classes</span><div class="stat-bottom">Learning levels <span>→</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span class="stat-icon green">◈</span><span class="trend">↗ Setup</span></div><strong>03</strong><span class="stat-label">Total subjects</span><div class="stat-bottom">Core subjects <span>→</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span class="stat-icon violet">≡</span><span class="stat-note">NEXT STEP</span></div><strong>—</strong><span class="stat-label">Total chapters</span><div class="stat-bottom">Not connected yet <span>→</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span class="stat-icon amber">☷</span><span class="stat-note">NEXT STEP</span></div><strong>—</strong><span class="stat-label">Learning resources</span><div class="stat-bottom">Notes and questions <span>→</span></div></article>
+      </section>
+      <div class="section-heading"><div><div class="eyebrow">CONTENT WORKSPACE</div><h2>Manage your platform</h2></div><span class="pill neutral">Starter setup</span></div>
+      <section class="manage-grid">
+        <button class="manage-card" data-demo="Classes management"><span class="manage-icon blue">▦</span><span class="manage-text"><b>Classes</b><small>Create and organise classes</small></span><span class="manage-arrow">↗</span></button>
+        <button class="manage-card" data-demo="Subjects management"><span class="manage-icon green">◈</span><span class="manage-text"><b>Subjects</b><small>Organise subjects by class</small></span><span class="manage-arrow">↗</span></button>
+        <button class="manage-card" data-demo="Chapters management"><span class="manage-icon violet">≡</span><span class="manage-text"><b>Chapters</b><small>Structure the syllabus</small></span><span class="manage-arrow">↗</span></button>
+        <button class="manage-card" data-demo="Notes management"><span class="manage-icon amber">▧</span><span class="manage-text"><b>Notes</b><small>Publish learning material</small></span><span class="manage-arrow">↗</span></button>
+      </section>
+      <section class="lower-grid admin-lower">
+        <article class="panel-card activity-panel"><div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h3>Workspace activity</h3></div><span class="pill neutral">Preview</span></div><div class="activity-empty"><span class="empty-icon">↗</span><div><b>Your activity will appear here</b><p>Connect the database in the next setup phase to track changes made in this workspace.</p></div></div></article>
+        <article class="panel-card checklist-panel"><div class="panel-heading"><div><div class="eyebrow">GETTING STARTED</div><h3>Setup checklist</h3></div><span class="check-count">1 / 4</span></div><div class="check-row done"><span>✓</span><div><b>Design foundation</b><small>Base dashboard UI created</small></div></div><div class="check-row"><span>2</span><div><b>Connect database</b><small>Create the new Supabase project</small></div></div><div class="check-row"><span>3</span><div><b>Secure admin access</b><small>Authentication and permissions</small></div></div><div class="check-row"><span>4</span><div><b>Enable content management</b><small>Make classes and subjects dynamic</small></div></div></article>
+      </section>
+      <footer class="page-footer"><span>© 2026 Aandpur Learning Platform</span><span>Built with purpose <b>✦</b></span></footer>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div><script src="../js/app.js"></script></body></html>
