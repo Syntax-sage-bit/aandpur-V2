@@ -1,31 +1,116 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aandpur Learning Platform</title><link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aandpur Learning Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .landing-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .login-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 9px;
+      background: #123b63;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .login-link:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 480px) {
+      .nav-actions {
+        gap: 8px;
+      }
+
+      .login-link {
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+    }
+  </style>
 </head>
+
 <body class="landing-body">
   <header class="landing-nav">
-    <a class="brand" href="index.html"><span class="brand-mark">A</span><span><b>Aandpur</b><small>LEARNING PLATFORM</small></span></a>
-    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">◐ <span>Theme</span></button>
+    <a class="brand" href="index.html">
+      <span class="brand-mark">A</span>
+      <span>
+        <b>Aandpur</b>
+        <small>LEARNING PLATFORM</small>
+      </span>
+    </a>
+
+    <div class="nav-actions">
+      <a class="login-link" href="auth.html">Login / Sign Up</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        ◐ <span>Theme</span>
+      </button>
+    </div>
   </header>
+
   <main class="landing-main">
-    <div class="eyebrow"><span class="status-dot"></span> YOUR LEARNING SPACE</div>
-    <h1>Learn with purpose.<br><span>Grow with Aandpur.</span></h1>
-    <p class="landing-copy">A focused space for learning, practice, and progress. Choose your workspace to continue.</p>
+    <div class="eyebrow">
+      <span class="status-dot"></span>
+      YOUR LEARNING SPACE
+    </div>
+
+    <h1>
+      Learn with purpose.<br>
+      <span>Grow with Aandpur.</span>
+    </h1>
+
+    <p class="landing-copy">
+      A focused space for learning, practice, and progress.
+      Sign in to continue to your workspace.
+    </p>
+
     <div class="portal-grid">
-      <a class="portal-card student-portal" href="student/dashboard.html">
-        <div class="portal-icon">↗</div><span class="card-kicker">FOR LEARNERS</span><h2>Student Panel</h2>
+      <a class="portal-card student-portal" href="auth.html">
+        <div class="portal-icon">↗</div>
+        <span class="card-kicker">FOR LEARNERS</span>
+        <h2>Student Panel</h2>
         <p>Explore your classes, subjects, and learning journey from one simple dashboard.</p>
-        <span class="portal-link">Open student workspace <b>→</b></span>
+        <span class="portal-link">Student login <b>→</b></span>
       </a>
-      <a class="portal-card admin-portal" href="admin/dashboard.html">
-        <div class="portal-icon">⌘</div><span class="card-kicker">FOR YOUR TEAM</span><h2>Admin Panel</h2>
+
+      <a class="portal-card admin-portal" href="auth.html">
+        <div class="portal-icon">⌘</div>
+        <span class="card-kicker">FOR YOUR TEAM</span>
+        <h2>Admin Panel</h2>
         <p>Manage classes and subjects through a clear, organised content workspace.</p>
-        <span class="portal-link">Open admin workspace <b>→</b></span>
+        <span class="portal-link">Admin login <b>→</b></span>
       </a>
     </div>
-    <div class="landing-foot"><span>ANDPUR · LEARN BETTER EVERY DAY</span><span>Built for focused learning</span></div>
+
+    <div class="landing-foot">
+      <span>AANDPUR · LEARN BETTER EVERY DAY</span>
+      <span>Built for focused learning</span>
+    </div>
   </main>
+
   <script src="js/app.js"></script>
-</body></html>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+</body>
+</html>

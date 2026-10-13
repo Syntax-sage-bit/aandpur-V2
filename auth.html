@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Aandpur Learning Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .auth-wrap {
+      width: min(440px, 92%);
+      margin: 55px auto;
+    }
+
+    .auth-card {
+      background: var(--card, #fff);
+      padding: 30px;
+      border: 1px solid var(--border, #e5e7eb);
+      border-radius: 18px;
+      box-shadow: 0 12px 40px #0000000d;
+    }
+
+    .auth-heading { margin-bottom: 24px; }
+    .auth-heading h1 { margin: 12px 0 8px; }
+    .auth-heading p { opacity: .75; }
+
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .auth-tabs button {
+      flex: 1;
+      padding: 11px;
+      border: 1px solid var(--border, #ddd);
+      border-radius: 9px;
+      cursor: pointer;
+      background: transparent;
+      color: inherit;
+    }
+
+    .auth-tabs button.active {
+      background: #123b63;
+      color: white;
+    }
+
+    .auth-form label {
+      display: block;
+      margin: 14px 0 6px;
+      font-weight: 600;
+    }
+
+    .auth-form input,
+    .auth-form select {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border, #ddd);
+      border-radius: 9px;
+      background: transparent;
+      color: inherit;
+    }
+
+    .auth-submit {
+      width: 100%;
+      padding: 13px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 9px;
+      background: #123b63;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-message {
+      margin-top: 15px;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .auth-back {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .auth-note {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: .75;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body class="landing-body">
+  <header class="landing-nav">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">A</span>
+      <span>
+        <b>Aandpur</b>
+        <small>LEARNING PLATFORM</small>
+      </span>
+    </a>
+
+    <button class="theme-toggle" data-theme-toggle>
+      ◐ <span>Theme</span>
+    </button>
+  </header>
+
+  <main class="auth-wrap">
+    <a class="auth-back" href="index.html">← Back to home</a>
+
+    <section class="auth-card">
+      <div class="auth-heading">
+        <div class="eyebrow">YOUR LEARNING SPACE</div>
+        <h1 id="authTitle">Welcome back</h1>
+        <p id="authSubtitle">Sign in to continue to Aandpur.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" id="loginTab" class="active">
+          Login
+        </button>
+        <button type="button" id="signupTab">
+          Student Sign Up
+        </button>
+      </div>
+
+      <form id="authForm" class="auth-form">
+        <div id="nameField" hidden>
+          <label for="displayName">Full name</label>
+          <input
+            id="displayName"
+            type="text"
+            autocomplete="name"
+            placeholder="Enter your full name"
+          >
+        </div>
+
+        <label for="role">Login as</label>
+        <select id="role" required>
+          <option value="student">Student</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          minlength="8"
+          placeholder="At least 8 characters"
+          required
+        >
+
+        <button class="auth-submit" id="submitButton" type="submit">
+          Login
+        </button>
+
+        <p id="authMessage" class="auth-message" role="status"></p>
+      </form>
+
+      <p class="auth-note">
+        Admin access is restricted to accounts authorised by the platform.
+        Selecting Admin does not grant administrator permissions.
+      </p>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
