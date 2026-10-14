@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123c68">
+  <title>Subject Chapters | Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #172033;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: auto;
+      padding: 26px 22px 45px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 800;
+      color: #123c68;
+    }
+
+    .brand span { color: #16a36a; }
+
+    .back-link {
+      color: #123c68;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: #16a36a; }
+
+    .hero {
+      background: linear-gradient(125deg, #10365e, #176a80);
+      color: white;
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: #ffffff20;
+      border: 1px solid #ffffff35;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(27px, 4vw, 38px);
+      overflow-wrap: anywhere;
+    }
+
+    .hero p {
+      margin: 0;
+      line-height: 1.7;
+      color: #e0edf5;
+      max-width: 680px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      min-width: 145px;
+      padding: 13px 17px;
+      background: #ffffff1c;
+      border: 1px solid #ffffff35;
+      border-radius: 12px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: #e0edf5;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 6px;
+      font-size: 23px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .search {
+      width: 100%;
+      max-width: 320px;
+      padding: 13px 15px;
+      border: 1px solid #dce3ed;
+      border-radius: 11px;
+      background: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: #176a80;
+      box-shadow: 0 0 0 3px #176a8015;
+    }
+
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .chapter-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid #e7ebf2;
+      border-radius: 17px;
+      padding: 23px;
+      min-width: 0;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px #16365312;
+    }
+
+    .chapter-icon {
+      width: 49px;
+      height: 49px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #e9f3ff;
+      font-size: 24px;
+      margin-bottom: 17px;
+    }
+
+    .chapter-label {
+      color: #16845b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 9px;
+    }
+
+    .chapter-card h3 {
+      font-size: 18px;
+      line-height: 1.5;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .chapter-card p {
+      color: #718096;
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0 0 22px;
+      flex: 1;
+    }
+
+    .open-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      background: #123c68;
+      color: white;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: auto;
+      transition: background .2s;
+    }
+
+    .open-btn:hover { background: #176a80; }
+
+    .message {
+      grid-column: 1 / -1;
+      padding: 32px 20px;
+      text-align: center;
+      background: white;
+      border: 1px solid #e7ebf2;
+      border-radius: 15px;
+      color: #64748b;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .message strong {
+      display: block;
+      color: #172033;
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .message a {
+      color: #123c68;
+      font-weight: 700;
+    }
+
+    .error { color: #b42318; }
+
+    @media (max-width: 600px) {
+      .page { padding: 18px 14px 32px; }
+      .hero { padding: 24px 20px; }
+      .section-heading { align-items: stretch; }
+      .search { max-width: none; }
+      .chapter-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">Aandpur<span>.</span></div>
+      <a class="back-link" href="subjects.html">← All Subjects</a>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow">YOUR LEARNING SPACE</span>
+
+      <h1 id="subjectTitle">Loading Subject...</h1>
+
+      <p>
+        Explore every chapter and strengthen your concepts with
+        study notes, previous year questions, practice and quizzes.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <strong id="chapterCount">—</strong>
+          <span>Published Chapters</span>
+        </div>
+
+        <div class="stat">
+          <strong id="className">—</strong>
+          <span>Class</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <h2>All Chapters</h2>
+          <p>Select a chapter to access its learning resources.</p>
+        </div>
+
+        <input
+          type="search"
+          id="chapterSearch"
+          class="search"
+          placeholder="Search chapters..."
+          aria-label="Search chapters"
+        >
+      </div>
+
+      <div class="chapter-grid" id="chapterGrid" aria-live="polite">
+        <div class="message">Loading chapters...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/student-guard.js"></script>
+  <script src="../js/student-chapters.js"></script>
+</body>
+</html>

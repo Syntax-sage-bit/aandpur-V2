@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Subjects | Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #172033;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: auto;
+      padding: 28px 22px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 800;
+      color: #123c68;
+    }
+
+    .brand span { color: #16a36a; }
+
+    .back-link {
+      color: #123c68;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 32px;
+      border-radius: 20px;
+      background: linear-gradient(125deg, #10365e, #176a80);
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(26px, 4vw, 38px);
+    }
+
+    .hero p {
+      margin: 0;
+      line-height: 1.7;
+      color: #e0edf5;
+    }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .stat {
+      padding: 12px 17px;
+      background: #ffffff1c;
+      border: 1px solid #ffffff35;
+      border-radius: 12px;
+      min-width: 130px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 23px;
+      margin-bottom: 5px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 23px;
+    }
+
+    .search {
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 15px;
+      border: 1px solid #dce3ed;
+      border-radius: 11px;
+      background: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search:focus { border-color: #176a80; }
+
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
+
+    .subject-card {
+      background: white;
+      border: 1px solid #e7ebf2;
+      border-radius: 17px;
+      padding: 23px;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .subject-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px #16365312;
+    }
+
+    .subject-icon {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: #e9f3ff;
+      font-size: 27px;
+      margin-bottom: 17px;
+    }
+
+    .subject-card h3 {
+      margin: 0 0 9px;
+      font-size: 19px;
+    }
+
+    .subject-card p {
+      color: #718096;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 42px;
+      margin: 0 0 20px;
+    }
+
+    .subject-meta {
+      font-size: 13px;
+      color: #66758b;
+      margin-bottom: 18px;
+    }
+
+    .open-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: #123c68;
+      color: white;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .open-btn:hover { background: #176a80; }
+
+    .message {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 14px;
+      text-align: center;
+      color: #64748b;
+      grid-column: 1 / -1;
+      line-height: 1.7;
+    }
+
+    .error { color: #b42318; }
+
+    @media (max-width: 600px) {
+      .page { padding: 18px 14px; }
+      .hero { padding: 24px 20px; }
+      .section-heading { align-items: stretch; }
+      .search { max-width: none; }
+      .subject-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">Aandpur<span>.</span></div>
+      <a class="back-link" href="dashboard.html">← Dashboard</a>
+    </header>
+
+    <section class="hero">
+      <h1>Explore Your Subjects 📚</h1>
+      <p>Choose a subject to explore its chapters, notes, previous year questions and practice material.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="subjectCount">—</strong>
+          <span>Available Subjects</span>
+        </div>
+        <div class="stat">
+          <strong id="className">—</strong>
+          <span>Your Class</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>My Subjects</h2>
+        <input
+          class="search"
+          id="subjectSearch"
+          type="search"
+          placeholder="Search subjects..."
+          aria-label="Search subjects"
+        >
+      </div>
+
+      <div class="subject-grid" id="subjectGrid">
+        <div class="message">Loading your subjects...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/student-guard.js"></script>
+  <script src="../js/student-subjects.js"></script>
+</body>
+</html>

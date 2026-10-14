@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123c68">
+  <title>Select Your Class | Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #172033;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: auto;
+      padding: 25px 22px 45px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .brand {
+      color: #123c68;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .brand span { color: #16a36a; }
+
+    .topbar a {
+      color: #123c68;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .hero {
+      background: linear-gradient(125deg, #10365e, #176a80);
+      color: white;
+      padding: 38px 32px;
+      border-radius: 22px;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 12px;
+      background: #ffffff20;
+      border: 1px solid #ffffff35;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: .5px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      margin: 0 0 13px;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 650px;
+      color: #e0edf5;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 7px;
+      font-size: 24px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .search {
+      width: 100%;
+      max-width: 300px;
+      padding: 13px 15px;
+      background: white;
+      border: 1px solid #dce3ed;
+      border-radius: 11px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search:focus { border-color: #176a80; }
+
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
+
+    .class-card {
+      padding: 25px;
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 18px;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .class-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px #16365312;
+    }
+
+    .class-icon {
+      width: 57px;
+      height: 57px;
+      display: grid;
+      place-items: center;
+      background: #e9f3ff;
+      border-radius: 15px;
+      font-size: 27px;
+      margin-bottom: 20px;
+    }
+
+    .class-card h3 {
+      font-size: 22px;
+      margin: 0 0 10px;
+    }
+
+    .class-card p {
+      color: #718096;
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 48px;
+      margin: 0 0 22px;
+    }
+
+    .select-btn {
+      display: block;
+      padding: 13px;
+      background: #123c68;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 10px;
+    }
+
+    .select-btn:hover { background: #176a80; }
+
+    .message {
+      grid-column: 1 / -1;
+      padding: 30px 20px;
+      background: white;
+      border: 1px solid #e6ebf2;
+      border-radius: 15px;
+      text-align: center;
+      color: #64748b;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .message strong {
+      display: block;
+      color: #172033;
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .error { color: #b42318; }
+
+    @media (max-width: 600px) {
+      .page { padding: 18px 14px 32px; }
+      .hero { padding: 27px 21px; }
+      .class-grid { grid-template-columns: 1fr; }
+      .search { max-width: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">Aandpur<span>.</span></div>
+      <a href="dashboard.html">← Dashboard</a>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow">YOUR LEARNING JOURNEY</span>
+      <h1>Which class are you studying in? 🎓</h1>
+      <p>
+        Select your class to discover your subjects, chapter-wise notes,
+        previous year questions, practice questions and quizzes.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <h2>Select Your Class</h2>
+          <p>Choose a class to continue learning.</p>
+        </div>
+
+        <input
+          id="classSearch"
+          class="search"
+          type="search"
+          placeholder="Search your class..."
+          aria-label="Search classes"
+        >
+      </div>
+
+      <div class="class-grid" id="classGrid" aria-live="polite">
+        <div class="message">Loading available classes...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/student-guard.js"></script>
+  <script src="../js/student-classes.js"></script>
+</body>
+</html>

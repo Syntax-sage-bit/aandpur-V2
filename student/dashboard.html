@@ -1,47 +1,372 @@
+
 <!DOCTYPE html>
-<html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Student Dashboard · Aandpur</title><link rel="stylesheet" href="../css/style.css"></head>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard · Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* Navigation links should look consistent with the existing UI */
+    a.quick-link {
+      display: flex;
+      width: 100%;
+      color: inherit;
+      text-decoration: none;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    a.current-class {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .side-nav a,
+    .sidebar-bottom > a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
 <body data-page="student">
 <div class="app-shell">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="../index.html"><span class="brand-mark">A</span><span><b>Aandpur</b><small>LEARNING PLATFORM</small></span></a>
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">A</span>
+      <span>
+        <b>Aandpur</b>
+        <small>LEARNING PLATFORM</small>
+      </span>
+    </a>
+
     <div class="nav-label">WORKSPACE</div>
+
     <nav class="side-nav">
-      <a class="nav-item active" href="dashboard.html"><span>▦</span> Dashboard</a>
-      <a class="nav-item" href="#" data-demo="Classes"><span>▤</span> Classes</a>
-      <a class="nav-item" href="#" data-demo="Subjects"><span>◈</span> Subjects</a>
-      <a class="nav-item" href="#" data-demo="Profile"><span>♙</span> My Profile</a>
+      <a class="nav-item active" href="dashboard.html">
+        <span>▦</span> Dashboard
+      </a>
+
+      <a class="nav-item" href="classes.html">
+        <span>▤</span> Classes
+      </a>
+
+      <a class="nav-item" href="subjects.html">
+        <span>◈</span> Subjects
+      </a>
+
+      <a class="nav-item" href="progress.html">
+        <span>↗</span> My Progress
+      </a>
+
+      <a class="nav-item" href="bookmarks.html">
+        <span>☆</span> Bookmarks
+      </a>
+
+      <a class="nav-item" href="notes.html">
+        <span>▧</span> Notes
+      </a>
+
+      <a class="nav-item" href="pyqs.html">
+        <span>▤</span> PYQs
+      </a>
+
+      <a class="nav-item" href="practice.html">
+        <span>✎</span> Practice Questions
+      </a>
+
+      <a class="nav-item" href="quizzes.html">
+        <span>✓</span> Quizzes
+      </a>
     </nav>
-    <div class="sidebar-bottom"><div class="sidebar-tip"><span class="tip-symbol">✦</span><b>Keep showing up.</b><p>Small steps make lasting progress.</p></div><a class="nav-item" href="../index.html"><span>↪</span> Back to portal</a></div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip">
+        <span class="tip-symbol">✦</span>
+        <b>Keep showing up.</b>
+        <p>Small steps make lasting progress.</p>
+      </div>
+
+      <a class="nav-item" href="../index.html">
+        <span>↪</span> Back to portal
+      </a>
+    </div>
   </aside>
+
+  <!-- MAIN CONTENT -->
   <main class="main-area">
-    <header class="topbar"><button class="mobile-menu" data-menu-toggle aria-label="Open menu">☰</button><div class="crumb">Workspace <span>/</span> Dashboard</div><div class="top-actions"><button class="icon-btn" data-theme-toggle title="Toggle theme">◐</button><span class="top-divider"></span><div class="user-chip"><span class="avatar student-avatar">RS</span><span class="user-meta"><b>Rahul Sharma</b><small>Class 12 Student</small></span></div></div></header>
+
+    <header class="topbar">
+      <button
+        class="mobile-menu"
+        data-menu-toggle
+        aria-label="Open menu"
+        type="button"
+      >☰</button>
+
+      <div class="crumb">
+        Workspace <span>/</span> Dashboard
+      </div>
+
+      <div class="top-actions">
+        <button
+          class="icon-btn"
+          data-theme-toggle
+          title="Toggle theme"
+          type="button"
+        >◐</button>
+
+        <span class="top-divider"></span>
+
+        <div class="user-chip">
+          <span class="avatar student-avatar" id="studentAvatar">ST</span>
+
+          <span class="user-meta">
+            <b id="studentName">Loading...</b>
+            <small id="studentClassLabel">Student</small>
+          </span>
+        </div>
+      </div>
+    </header>
+
     <div class="page-content">
-      <div class="welcome-row"><div><div class="eyebrow">TUESDAY, YOUR NEXT STEP STARTS HERE</div><h1>Welcome back, Rahul <span class="wave">✦</span></h1><p class="muted">Ready to make today count? Pick up where you left off.</p></div><div class="current-class"><span class="class-icon">12</span><span><small>YOUR CURRENT CLASS</small><b>Class 12</b></span><span class="arrow">↗</span></div></div>
+
+      <!-- WELCOME SECTION -->
+      <section class="welcome-row">
+        <div>
+          <div class="eyebrow" id="welcomeDate">
+            YOUR LEARNING SPACE
+          </div>
+
+          <h1>
+            Welcome back,
+            <span id="welcomeName">Student</span>
+            <span class="wave">✦</span>
+          </h1>
+
+          <p class="muted">
+            Ready to make today count? Pick up where you left off.
+          </p>
+        </div>
+
+        <a class="current-class" href="classes.html">
+          <span class="class-icon">A</span>
+
+          <span>
+            <small>AVAILABLE CLASSES</small>
+            <b id="currentClassName">Loading...</b>
+          </span>
+
+          <span class="arrow">↗</span>
+        </a>
+      </section>
+
+      <!-- DASHBOARD STATISTICS -->
       <section class="stats-grid">
-        <article class="stat-card"><div class="stat-top"><span class="stat-icon blue">▦</span><span class="stat-note">YOUR SPACE</span></div><strong>01</strong><span class="stat-label">Enrolled class</span><div class="stat-bottom">Class 12 curriculum <span>→</span></div></article>
-        <article class="stat-card"><div class="stat-top"><span class="stat-icon green">◈</span><span class="stat-note">READY TO EXPLORE</span></div><strong>03</strong><span class="stat-label">Core subjects</span><div class="stat-bottom">Physics · Chemistry · Maths <span>→</span></div></article>
-        <article class="stat-card"><div class="stat-top"><span class="stat-icon amber">✦</span><span class="stat-note">YOUR PACE</span></div><strong>Start small</strong><span class="stat-label">Build a study streak</span><div class="stat-bottom">Consistency over intensity <span>↗</span></div></article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon blue">▦</span>
+            <span class="stat-note">LEARNING SPACE</span>
+          </div>
+
+          <strong id="classCount">—</strong>
+
+          <span class="stat-label">Published classes</span>
+
+          <a class="stat-bottom" href="classes.html">
+            Available to explore <span>→</span>
+          </a>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon green">◈</span>
+            <span class="stat-note">READY TO EXPLORE</span>
+          </div>
+
+          <strong id="subjectCount">—</strong>
+
+          <span class="stat-label">Published subjects</span>
+
+          <a class="stat-bottom" href="subjects.html">
+            Explore your subjects <span>→</span>
+          </a>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon amber">✦</span>
+            <span class="stat-note">YOUR PACE</span>
+          </div>
+
+          <strong>Start small</strong>
+
+          <span class="stat-label">Build a study streak</span>
+
+          <a class="stat-bottom" href="progress.html">
+            View your progress <span>↗</span>
+          </a>
+        </article>
+
       </section>
-      <div class="section-heading"><div><div class="eyebrow">YOUR LEARNING SPACE</div><h2>Explore subjects</h2></div><button class="text-button" data-demo="All subjects">View all <span>→</span></button></div>
-      <section class="subject-grid">
-        <article class="subject-card physics"><div class="subject-card-top"><span class="subject-icon">Φ</span><span class="subject-code">PHY / 01</span></div><h3>Physics</h3><p>Understand how the world works.</p><div class="subject-foot"><span>Class 12</span><button data-demo="Physics">Explore <b>→</b></button></div></article>
-        <article class="subject-card chemistry"><div class="subject-card-top"><span class="subject-icon">⚗</span><span class="subject-code">CHE / 02</span></div><h3>Chemistry</h3><p>Connect reactions to real ideas.</p><div class="subject-foot"><span>Class 12</span><button data-demo="Chemistry">Explore <b>→</b></button></div></article>
-        <article class="subject-card mathematics"><div class="subject-card-top"><span class="subject-icon">∑</span><span class="subject-code">MAT / 03</span></div><h3>Mathematics</h3><p>Build clarity, one problem at a time.</p><div class="subject-foot"><span>Class 12</span><button data-demo="Mathematics">Explore <b>→</b></button></div></article>
+
+      <!-- SUBJECTS -->
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">YOUR LEARNING SPACE</div>
+          <h2>Explore subjects</h2>
+        </div>
+
+        <button
+          class="text-button"
+          id="refreshDashboard"
+          type="button"
+        >
+          Refresh <span>↻</span>
+        </button>
+      </div>
+
+      <section class="subject-grid" id="subjectGrid">
+        <article class="panel-card">
+          <p>Loading published subjects...</p>
+        </article>
       </section>
+
+      <!-- LOWER PANELS -->
       <section class="lower-grid">
-        <article class="panel-card progress-panel"><div class="panel-heading"><div><div class="eyebrow">YOUR JOURNEY</div><h3>Learning progress</h3></div><span class="pill neutral">Getting started</span></div><div class="progress-empty"><div class="progress-ring">0<span>%</span></div><div><b>Your progress starts here</b><p>Once lessons and activities are connected, your completed work will appear here.</p></div></div><div class="progress-track"><span style="width:0%"></span></div><div class="progress-legend"><span><i></i> Completed</span><span>Progress will update as you learn</span></div></article>
-        <article class="panel-card quick-panel"><div class="panel-heading"><div><div class="eyebrow">SHORTCUTS</div><h3>Quick access</h3></div><span class="dots">•••</span></div><button class="quick-link" data-demo="Classes"><span class="quick-icon blue">▤</span><span><b>My classes</b><small>Browse your learning spaces</small></span><span class="quick-arrow">→</span></button><button class="quick-link" data-demo="Subjects"><span class="quick-icon green">◈</span><span><b>My subjects</b><small>Choose a subject to explore</small></span><span class="quick-arrow">→</span></button><button class="quick-link" data-demo="Profile"><span class="quick-icon amber">♙</span><span><b>My profile</b><small>Manage your account details</small></span><span class="quick-arrow">→</span></button></article>
+
+        <!-- PROGRESS PANEL -->
+        <article class="panel-card progress-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow">YOUR JOURNEY</div>
+              <h3>Learning progress</h3>
+            </div>
+
+            <span class="pill neutral">Getting started</span>
+          </div>
+
+          <div class="progress-empty">
+            <div class="progress-ring">
+              —<span>%</span>
+            </div>
+
+            <div>
+              <b>Progress tracking is coming next</b>
+
+              <p>
+                Your actual progress will appear here once lesson
+                completion and progress tracking are connected.
+              </p>
+
+              <a href="progress.html">Open My Progress →</a>
+            </div>
+          </div>
+
+          <div class="progress-track">
+            <span style="width:0%"></span>
+          </div>
+
+          <div class="progress-legend">
+            <span><i></i> Completed</span>
+            <span>Progress tracking not connected yet</span>
+          </div>
+        </article>
+
+        <!-- QUICK ACCESS -->
+        <article class="panel-card quick-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow">SHORTCUTS</div>
+              <h3>Quick access</h3>
+            </div>
+
+            <span class="dots">•••</span>
+          </div>
+
+          <a class="quick-link" href="classes.html">
+            <span class="quick-icon blue">▤</span>
+
+            <span>
+              <b>My classes</b>
+              <small>Browse your learning spaces</small>
+            </span>
+
+            <span class="quick-arrow">→</span>
+          </a>
+
+          <a class="quick-link" href="subjects.html">
+            <span class="quick-icon green">◈</span>
+
+            <span>
+              <b>My subjects</b>
+              <small>Choose a subject to explore</small>
+            </span>
+
+            <span class="quick-arrow">→</span>
+          </a>
+
+          <a class="quick-link" href="notes.html">
+            <span class="quick-icon blue">▧</span>
+
+            <span>
+              <b>Study notes</b>
+              <small>Open your study material</small>
+            </span>
+
+            <span class="quick-arrow">→</span>
+          </a>
+
+          <a class="quick-link" href="pyqs.html">
+            <span class="quick-icon amber">✎</span>
+
+            <span>
+              <b>Previous year questions</b>
+              <small>Practise board exam questions</small>
+            </span>
+
+            <span class="quick-arrow">→</span>
+          </a>
+
+          <a class="quick-link" href="quizzes.html">
+            <span class="quick-icon green">✓</span>
+
+            <span>
+              <b>Quizzes</b>
+              <small>Test your understanding</small>
+            </span>
+
+            <span class="quick-arrow">→</span>
+          </a>
+        </article>
+
       </section>
-      <footer class="page-footer"><span>© 2026 Aandpur Learning Platform</span><span>Learn better, every day <b>✦</b></span></footer>
+
+      <!-- FOOTER -->
+      <footer class="page-footer">
+        <span>© 2026 Aandpur Learning Platform</span>
+        <span>Learn better, every day <b>✦</b></span>
+      </footer>
+
     </div>
   </main>
 </div>
-<div class="toast" id="toast" role="status"></div><div class="toast" id="toast" role="status"></div>
 
+<div class="toast" id="toast" role="status"></div>
+
+<!-- SCRIPTS -->
 <script src="../js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase.js"></script>
 <script src="../js/student-guard.js"></script>
 <script src="../js/logout.js"></script>
+<script src="../js/student-dashboard.js"></script>
+
 </body>
-</html></body></html>
+</html>
