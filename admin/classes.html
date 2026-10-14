@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Management | Aandpur</title>
+  <style>
+    :root{--primary:#123c63;--bg:#f4f7fb;--border:#e1e7ef;--text:#172b43;--muted:#6b7b90;--red:#c43d45}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    .page{max-width:1250px;margin:auto;padding:28px 20px 50px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:28px}
+    .brand{font-size:14px;font-weight:700;color:var(--primary);letter-spacing:1px}
+    h1{font-size:clamp(25px,4vw,34px);margin:10px 0 7px}
+    .subtitle{color:var(--muted);font-size:14px;line-height:1.6}
+    .btn{border:0;border-radius:8px;padding:11px 16px;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .primary{background:var(--primary);color:white}.secondary{background:#fff;color:var(--text);border:1px solid var(--border)}.danger{background:#fff0f0;color:var(--red)}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:22px}
+    .stat,.card{background:#fff;border:1px solid var(--border);border-radius:13px;box-shadow:0 3px 14px rgba(20,43,70,.035)}
+    .stat{padding:20px}.stat-label{font-size:13px;color:var(--muted)}.stat-number{display:block;font-size:29px;margin-top:9px}
+    .card{padding:22px;margin-bottom:22px}.card h2{margin:0 0 7px;font-size:20px}.desc{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 22px}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+    .field{display:flex;flex-direction:column;gap:8px}.field label{font-size:13px;font-weight:700}
+    .field input,.filters input,.filters select{width:100%;min-height:44px;padding:11px 12px;border:1px solid #d5deea;border-radius:8px;font-size:14px;color:var(--text);background:#fff}
+    .publish{display:flex;align-items:center;gap:10px;font-size:14px;margin-top:20px}.publish input{width:17px;height:17px}
+    .form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}.toolbar h2{margin:0}
+    .filters{display:flex;gap:10px;flex-wrap:wrap}.filters input,.filters select{min-height:40px;padding:9px 11px;font-size:13px;max-width:100%}
+    .table-wrap{width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:600px}
+    th,td{text-align:left;padding:15px 12px;border-bottom:1px solid #edf0f5;font-size:13px;vertical-align:middle}
+    th{color:var(--muted);font-weight:700;background:#f9fbfd}td strong{font-size:14px}
+    .badge{display:inline-block;border-radius:30px;padding:6px 10px;font-size:11px;font-weight:700}.badge.published{color:#146c3c;background:#e7f7ed}.badge.draft{color:#8a5b08;background:#fff3d7}
+    .actions{display:flex;gap:7px;flex-wrap:wrap}.actions .btn{padding:8px 10px;min-height:34px;font-size:12px}
+    .message{padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.6;margin-bottom:18px;display:none;overflow-wrap:anywhere}.message.show{display:block}.message.success{background:#e9f8ef;color:#146c3c}.message.error{background:#fff0f0;color:#a12630}
+    .empty{text-align:center;padding:35px 15px;color:var(--muted);font-size:14px}.hidden{display:none!important}.footer{text-align:center;font-size:12px;color:var(--muted);padding-top:5px}
+    @media(max-width:650px){.page{padding:19px 12px 35px}.stats{grid-template-columns:1fr;gap:10px}.stat{padding:15px}.stat-number{font-size:25px}.card{padding:16px}.form-grid{grid-template-columns:1fr}.toolbar{align-items:stretch}.filters{width:100%}.filters select,.filters input{flex:1;min-width:0}.topbar>.btn{width:100%}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <div>
+      <div class="brand">AANDPUR LEARNING PLATFORM</div>
+      <h1>Class Management</h1>
+      <div class="subtitle">Add, edit, publish and manage student classes.</div>
+    </div>
+    <a class="btn secondary" href="dashboard.html">← Back to Dashboard</a>
+  </header>
+
+  <div id="message" class="message" role="status" aria-live="polite"></div>
+
+  <section class="stats">
+    <div class="stat"><span class="stat-label">Total Classes</span><strong class="stat-number" id="total">—</strong></div>
+    <div class="stat"><span class="stat-label">Published</span><strong class="stat-number" id="published">—</strong></div>
+    <div class="stat"><span class="stat-label">Drafts</span><strong class="stat-number" id="drafts">—</strong></div>
+  </section>
+
+  <section class="card" id="form-card">
+    <h2 id="form-title">Add New Class</h2>
+    <p class="desc">Enter a class name and choose whether students can see it.</p>
+    <form id="class-form">
+      <div class="form-grid">
+        <div class="field">
+          <label for="class-name">Class Name *</label>
+          <input id="class-name" type="text" maxlength="100" placeholder="e.g. Class 12" required>
+        </div>
+      </div>
+      <label class="publish" for="is-published"><input id="is-published" type="checkbox" checked> Publish class for students</label>
+      <div class="form-actions">
+        <button class="btn primary" id="save" type="submit">Add Class</button>
+        <button class="btn secondary hidden" id="cancel" type="button">Cancel Edit</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="toolbar">
+      <div><h2>All Classes</h2><p class="desc" style="margin:7px 0 0">Classes saved in your Supabase database.</p></div>
+      <div class="filters">
+        <select id="status-filter" aria-label="Filter by status">
+          <option value="">All statuses</option><option value="published">Published</option><option value="draft">Drafts</option>
+        </select>
+        <input id="search" type="search" placeholder="Search classes..." aria-label="Search classes">
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="class-list"><tr><td colspan="3" class="empty">Loading classes...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+  <footer class="footer">Aandpur Learning Platform · Admin Panel</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/admin-guard.js"></script>
+<script>
+(() => {
+  "use strict";
+  const db=window.supabaseClient;
+  const $=id=>document.getElementById(id);
+  let rows=[],editingId=null,busy=false,messageTimer;
+
+  function message(text,type="success"){
+    const box=$("message");
+    box.textContent=text;
+    box.className="message show "+type;
+    clearTimeout(messageTimer);
+    messageTimer=setTimeout(()=>box.className="message",6000);
+  }
+  function esc(v){
+    return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function errorText(e){
+    if(e?.code==="23505")return "A class with this name may already exist.";
+    if(e?.code==="23503")return "This class is linked to other records and cannot be deleted.";
+    if(e?.code==="42501"||e?.code==="PGRST301")return "Permission denied. Check admin login and Supabase RLS policies.";
+    return e?.message||"An unexpected error occurred.";
+  }
+  function stats(){
+    $("total").textContent=rows.length;
+    $("published").textContent=rows.filter(r=>r.is_published===true).length;
+    $("drafts").textContent=rows.filter(r=>r.is_published!==true).length;
+  }
+  function render(){
+    const q=$("search").value.trim().toLowerCase(),status=$("status-filter").value;
+    const list=rows.filter(r=>(!q||(r.name||"").toLowerCase().includes(q))&&(!status||(status==="published"?r.is_published===true:r.is_published!==true)));
+    $("class-list").innerHTML=list.length?list.map(r=>{
+      const pub=r.is_published===true;
+      return `<tr><td><strong>${esc(r.name)}</strong></td><td><span class="badge ${pub?"published":"draft"}">${pub?"Published":"Draft"}</span></td><td><div class="actions">
+        <button class="btn secondary" data-action="edit" data-id="${esc(r.id)}">Edit</button>
+        <button class="btn secondary" data-action="toggle" data-id="${esc(r.id)}">${pub?"Unpublish":"Publish"}</button>
+        <button class="btn danger" data-action="delete" data-id="${esc(r.id)}">Delete</button>
+      </div></td></tr>`;
+    }).join(""):'<tr><td colspan="3" class="empty">No classes found.</td></tr>';
+  }
+  async function load(){
+    const {data,error}=await db.from("classes").select("id,name,is_published").order("name");
+    if(error)throw error;
+    rows=data||[];stats();render();
+  }
+  function reset(){
+    editingId=null;$("class-form").reset();$("is-published").checked=true;
+    $("form-title").textContent="Add New Class";$("save").textContent="Add Class";$("cancel").classList.add("hidden");
+  }
+  $("class-form").addEventListener("submit",async e=>{
+    e.preventDefault();if(busy)return;
+    const name=$("class-name").value.trim();
+    if(!name){message("Please enter a class name.","error");return;}
+    if(rows.some(r=>r.id!==editingId&&r.name.trim().toLowerCase()===name.toLowerCase())){
+      message("This class already exists.","error");return;
+    }
+    busy=true;$("save").disabled=true;$("save").textContent="Saving...";
+    try{
+      const payload={name,is_published:$("is-published").checked};
+      const result=editingId
+        ?await db.from("classes").update(payload).eq("id",editingId).select("id")
+        :await db.from("classes").insert(payload).select("id");
+      if(result.error)throw result.error;
+      if(!result.data?.length)throw new Error("No row changed. Check admin permissions and RLS policies.");
+      const wasEdit=Boolean(editingId);
+      reset();await load();
+      message(wasEdit?"Class updated successfully.":"Class added successfully.");
+    }catch(e){console.error(e);message("Could not save class: "+errorText(e),"error");}
+    finally{busy=false;$("save").disabled=false;$("save").textContent=editingId?"Update Class":"Add Class";}
+  });
+  $("cancel").addEventListener("click",reset);
+  $("search").addEventListener("input",render);
+  $("status-filter").addEventListener("change",render);
+
+  $("class-list").addEventListener("click",async e=>{
+    const b=e.target.closest("button[data-action]");if(!b)return;
+    const row=rows.find(r=>String(r.id)===String(b.dataset.id));if(!row)return;
+    if(b.dataset.action==="edit"){
+      editingId=row.id;$("class-name").value=row.name;$("is-published").checked=row.is_published===true;
+      $("form-title").textContent="Edit Class";$("save").textContent="Update Class";$("cancel").classList.remove("hidden");
+      $("form-card").scrollIntoView({behavior:"smooth",block:"start"});$("class-name").focus();return;
+    }
+    if(b.dataset.action==="toggle"){
+      const next=row.is_published!==true;
+      if(!confirm(`Are you sure you want to ${next?"publish":"unpublish"} "${row.name}"?`))return;
+      b.disabled=true;
+      try{
+        const {data,error}=await db.from("classes").update({is_published:next}).eq("id",row.id).select("id");
+        if(error)throw error;
+        if(!data?.length)throw new Error("No class updated. Check admin permissions.");
+        await load();message(`Class ${next?"published":"unpublished"} successfully.`);
+      }catch(e){console.error(e);message("Could not update class: "+errorText(e),"error");}
+      finally{b.disabled=false;}
+    }
+    if(b.dataset.action==="delete"){
+      if(!confirm(`Delete "${row.name}"? This can fail if subjects or other records are linked to it.`))return;
+      b.disabled=true;
+      try{
+        const {data,error}=await db.from("classes").delete().eq("id",row.id).select("id");
+        if(error)throw error;
+        if(!data?.length)throw new Error("Class was not deleted. Check admin permissions or linked subjects.");
+        if(editingId===row.id)reset();
+        await load();message("Class deleted successfully.");
+      }catch(e){console.error(e);message("Could not delete class: "+errorText(e),"error");}
+      finally{b.disabled=false;}
+    }
+  });
+
+  async function init(){
+    if(!db){
+      message("Supabase client not found. Check ../js/supabase.js and window.supabaseClient.","error");
+      $("class-list").innerHTML='<tr><td colspan="3" class="empty">Supabase connection unavailable.</td></tr>';return;
+    }
+    try{await load();}
+    catch(e){console.error(e);message("Could not load classes: "+errorText(e),"error");$("class-list").innerHTML='<tr><td colspan="3" class="empty">Could not load class data.</td></tr>';}
+  }
+  init();
+})();
+</script>
+</body>
+</html>

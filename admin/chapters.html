@@ -1,0 +1,1134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter Management | Aandpur Admin</title>
+
+  <style>
+    :root {
+      --primary: #123c63;
+      --primary-light: #eaf2fa;
+      --bg: #f4f7fb;
+      --border: #e1e7ef;
+      --text: #172b43;
+      --muted: #6b7b90;
+      --green: #16834a;
+      --red: #c43d45;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .ch-page {
+      max-width: 1250px;
+      margin: auto;
+      padding: 28px 20px 50px;
+    }
+
+    .ch-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 28px;
+    }
+
+    .ch-brand {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+
+    .ch-heading {
+      font-size: clamp(25px, 4vw, 34px);
+      margin: 10px 0 7px;
+    }
+
+    .ch-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .ch-btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 40px;
+    }
+
+    .ch-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .ch-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .ch-secondary {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .ch-danger {
+      background: #fff0f0;
+      color: var(--red);
+    }
+
+    .ch-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .ch-stat,
+    .ch-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      box-shadow: 0 3px 14px rgba(20, 43, 70, 0.035);
+    }
+
+    .ch-stat {
+      padding: 20px;
+    }
+
+    .ch-stat-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .ch-stat-number {
+      display: block;
+      font-size: 29px;
+      margin-top: 9px;
+    }
+
+    .ch-card {
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .ch-card h2 {
+      margin: 0 0 7px;
+      font-size: 20px;
+    }
+
+    .ch-card-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 22px;
+    }
+
+    .ch-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .ch-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ch-field label {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .ch-field input,
+    .ch-field select {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 12px;
+      border: 1px solid #d5deea;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--text);
+      background: white;
+    }
+
+    .ch-field input:focus,
+    .ch-field select:focus {
+      outline: 2px solid #c8dcf4;
+      border-color: #648db8;
+    }
+
+    .ch-publish {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .ch-publish input {
+      width: 17px;
+      height: 17px;
+    }
+
+    .ch-form-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .ch-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .ch-toolbar h2 {
+      margin: 0;
+    }
+
+    .ch-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ch-filters select,
+    .ch-filters input {
+      min-height: 40px;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      font-size: 13px;
+      max-width: 100%;
+    }
+
+    .ch-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .ch-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 740px;
+    }
+
+    .ch-table th,
+    .ch-table td {
+      text-align: left;
+      padding: 15px 12px;
+      border-bottom: 1px solid #edf0f5;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .ch-table th {
+      color: var(--muted);
+      font-weight: 700;
+      background: #f9fbfd;
+    }
+
+    .ch-table td strong {
+      font-size: 14px;
+    }
+
+    .ch-badge {
+      display: inline-block;
+      border-radius: 30px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .ch-badge.published {
+      color: #146c3c;
+      background: #e7f7ed;
+    }
+
+    .ch-badge.draft {
+      color: #8a5b08;
+      background: #fff3d7;
+    }
+
+    .ch-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .ch-actions .ch-btn {
+      padding: 8px 10px;
+      min-height: 34px;
+      font-size: 12px;
+    }
+
+    .ch-message {
+      padding: 13px 15px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      display: none;
+      overflow-wrap: anywhere;
+    }
+
+    .ch-message.show {
+      display: block;
+    }
+
+    .ch-message.success {
+      background: #e9f8ef;
+      color: #146c3c;
+    }
+
+    .ch-message.error {
+      background: #fff0f0;
+      color: #a12630;
+    }
+
+    .ch-empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ch-hidden {
+      display: none !important;
+    }
+
+    .ch-footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 5px;
+    }
+
+    @media (max-width: 650px) {
+      .ch-page {
+        padding: 19px 12px 35px;
+      }
+
+      .ch-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .ch-stat {
+        padding: 15px;
+      }
+
+      .ch-stat-number {
+        font-size: 25px;
+      }
+
+      .ch-card {
+        padding: 16px;
+      }
+
+      .ch-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ch-toolbar {
+        align-items: stretch;
+      }
+
+      .ch-filters {
+        width: 100%;
+      }
+
+      .ch-filters select,
+      .ch-filters input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .ch-topbar > .ch-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="ch-page">
+    <header class="ch-topbar">
+      <div>
+        <div class="ch-brand">AANDPUR LEARNING PLATFORM</div>
+        <h1 class="ch-heading">Chapter Management</h1>
+        <div class="ch-subtitle">
+          Add, edit, publish and manage student chapters.
+        </div>
+        <div class="user-meta ch-hidden">
+          <b>Admin</b>
+          <small>Administrator</small>
+        </div>
+      </div>
+
+      <a class="ch-btn ch-secondary" href="dashboard.html">
+        ← Back to Dashboard
+      </a>
+    </header>
+
+    <div id="ch-message" class="ch-message" role="status"></div>
+
+    <section class="ch-stats">
+      <div class="ch-stat">
+        <span class="ch-stat-label">Total Chapters</span>
+        <strong class="ch-stat-number" id="ch-total">—</strong>
+      </div>
+      <div class="ch-stat">
+        <span class="ch-stat-label">Published</span>
+        <strong class="ch-stat-number" id="ch-published">—</strong>
+      </div>
+      <div class="ch-stat">
+        <span class="ch-stat-label">Drafts</span>
+        <strong class="ch-stat-number" id="ch-drafts">—</strong>
+      </div>
+    </section>
+
+    <section class="ch-card" id="ch-form-card">
+      <h2 id="ch-form-title">Add New Chapter</h2>
+      <p class="ch-card-desc">
+        Select a class and subject, then enter the chapter name.
+      </p>
+
+      <form id="ch-form">
+        <div class="ch-form-grid">
+          <div class="ch-field">
+            <label for="ch-class">Class *</label>
+            <select id="ch-class" required>
+              <option value="">Loading classes...</option>
+            </select>
+          </div>
+
+          <div class="ch-field">
+            <label for="ch-subject">Subject *</label>
+            <select id="ch-subject" required disabled>
+              <option value="">Select a class first</option>
+            </select>
+          </div>
+
+          <div class="ch-field" style="grid-column: 1 / -1;">
+            <label for="ch-name">Chapter Name *</label>
+            <input
+              id="ch-name"
+              type="text"
+              maxlength="200"
+              placeholder="e.g. Electric Charges and Fields"
+              required
+            />
+          </div>
+        </div>
+
+        <label class="ch-publish" for="ch-is-published">
+          <input id="ch-is-published" type="checkbox" checked />
+          Publish chapter for students
+        </label>
+
+        <div class="ch-form-actions">
+          <button class="ch-btn ch-primary" id="ch-save" type="submit">
+            Add Chapter
+          </button>
+          <button
+            class="ch-btn ch-secondary ch-hidden"
+            id="ch-cancel"
+            type="button"
+          >
+            Cancel Edit
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="ch-card">
+      <div class="ch-toolbar">
+        <div>
+          <h2>All Chapters</h2>
+          <p class="ch-card-desc" style="margin: 7px 0 0;">
+            Chapters saved in your Supabase database.
+          </p>
+        </div>
+
+        <div class="ch-filters">
+          <select id="ch-filter-class" aria-label="Filter by class">
+            <option value="">All Classes</option>
+          </select>
+
+          <select id="ch-filter-subject" aria-label="Filter by subject">
+            <option value="">All Subjects</option>
+          </select>
+
+          <input
+            id="ch-search"
+            type="search"
+            placeholder="Search chapters..."
+            aria-label="Search chapters"
+          />
+        </div>
+      </div>
+
+      <div class="ch-table-wrap">
+        <table class="ch-table">
+          <thead>
+            <tr>
+              <th>Chapter</th>
+              <th>Class</th>
+              <th>Subject</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ch-list">
+            <tr>
+              <td colspan="5" class="ch-empty">Loading chapters...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="ch-footer">
+      Aandpur Learning Platform · Admin Panel
+    </footer>
+  </main>
+
+  <!-- Supabase library must load before supabase.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/admin-guard.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const db = window.supabaseClient;
+
+      const el = (id) => document.getElementById(id);
+
+      const state = {
+        classes: [],
+        subjects: [],
+        chapters: [],
+        editingId: null,
+        busy: false
+      };
+
+      function showMessage(message, type) {
+        const box = el("ch-message");
+        box.textContent = message;
+        box.className = "ch-message show " + type;
+        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      function clearMessage() {
+        const box = el("ch-message");
+        box.textContent = "";
+        box.className = "ch-message";
+      }
+
+      function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[char]);
+      }
+
+      function setBusy(busy) {
+        state.busy = busy;
+        el("ch-save").disabled = busy;
+        el("ch-class").disabled = busy;
+        el("ch-subject").disabled = busy || !el("ch-class").value;
+        el("ch-name").disabled = busy;
+        el("ch-is-published").disabled = busy;
+
+        el("ch-save").textContent = busy
+          ? "Saving..."
+          : state.editingId
+            ? "Update Chapter"
+            : "Add Chapter";
+      }
+
+      function fillSelect(select, rows, placeholder, selectedValue) {
+        select.replaceChildren();
+
+        const first = document.createElement("option");
+        first.value = "";
+        first.textContent = placeholder;
+        select.appendChild(first);
+
+        rows.forEach((row) => {
+          const option = document.createElement("option");
+          option.value = row.id;
+          option.textContent = row.name;
+          if (String(row.id) === String(selectedValue ?? "")) {
+            option.selected = true;
+          }
+          select.appendChild(option);
+        });
+      }
+
+      async function loadClasses() {
+        const { data, error } = await db
+          .from("classes")
+          .select("id, name, is_published")
+          .order("name");
+
+        if (error) throw error;
+
+        state.classes = data || [];
+
+        fillSelect(el("ch-class"), state.classes, "Select Class");
+        fillSelect(
+          el("ch-filter-class"),
+          state.classes,
+          "All Classes"
+        );
+      }
+
+      async function loadSubjects(classId, selectedSubjectId) {
+        el("ch-subject").disabled = true;
+
+        if (!classId) {
+          state.subjects = [];
+          fillSelect(el("ch-subject"), [], "Select a class first");
+          return;
+        }
+
+        const { data, error } = await db
+          .from("subjects")
+          .select("id, name, class_id, is_published")
+          .eq("class_id", classId)
+          .order("name");
+
+        if (error) throw error;
+
+        state.subjects = data || [];
+
+        fillSelect(
+          el("ch-subject"),
+          state.subjects,
+          "Select Subject",
+          selectedSubjectId
+        );
+
+        el("ch-subject").disabled = state.busy;
+
+        if (!state.busy) {
+          el("ch-filter-subject").disabled = false;
+        }
+      }
+
+      async function loadAllChapters() {
+        const { data, error } = await db
+          .from("chapters")
+          .select("id, name, subject_id, is_published")
+          .order("name");
+
+        if (error) throw error;
+
+        state.chapters = data || [];
+        renderChapters();
+        updateStats();
+      }
+
+      function getClassForSubject(subjectId) {
+        const subject = state.subjects.find(
+          (item) => String(item.id) === String(subjectId)
+        );
+
+        if (subject) {
+          return state.classes.find(
+            (item) => String(item.id) === String(subject.class_id)
+          );
+        }
+
+        const cached = state._subjectMap?.[subjectId];
+        if (cached) {
+          return state.classes.find(
+            (item) => String(item.id) === String(cached.class_id)
+          );
+        }
+
+        return null;
+      }
+
+      async function renderChapters() {
+        const tbody = el("ch-list");
+        const filterClass = el("ch-filter-class").value;
+        const filterSubject = el("ch-filter-subject").value;
+        const search = el("ch-search").value.trim().toLowerCase();
+
+        const subjectIds = new Set(
+          state.subjects.map((item) => String(item.id))
+        );
+
+        let filtered = state.chapters.filter((chapter) => {
+          const subject = state._subjectMap?.[chapter.subject_id];
+          const subjectName = subject?.name || "";
+          const chapterName = chapter.name || "";
+
+          if (filterSubject &&
+              String(chapter.subject_id) !== String(filterSubject)) {
+            return false;
+          }
+
+          if (filterClass &&
+              String(subject?.class_id ?? "") !== String(filterClass)) {
+            return false;
+          }
+
+          if (search &&
+              !chapterName.toLowerCase().includes(search) &&
+              !subjectName.toLowerCase().includes(search)) {
+            return false;
+          }
+
+          return true;
+        });
+
+        if (!filtered.length) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="5" class="ch-empty">
+                No chapters found. Add your first chapter using the form above.
+              </td>
+            </tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map((chapter) => {
+          const subject = state._subjectMap?.[chapter.subject_id];
+          const className = state._classMap?.[subject?.class_id]?.name
+            || "Unknown class";
+          const subjectName = subject?.name || "Unknown subject";
+          const isPublished = chapter.is_published === true;
+
+          return `
+            <tr>
+              <td><strong>${escapeHTML(chapter.name)}</strong></td>
+              <td>${escapeHTML(className)}</td>
+              <td>${escapeHTML(subjectName)}</td>
+              <td>
+                <span class="ch-badge ${isPublished ? "published" : "draft"}">
+                  ${isPublished ? "Published" : "Draft"}
+                </span>
+              </td>
+              <td>
+                <div class="ch-actions">
+                  <button class="ch-btn ch-secondary"
+                    data-action="edit" data-id="${escapeHTML(chapter.id)}">
+                    Edit
+                  </button>
+                  <button class="ch-btn ch-secondary"
+                    data-action="toggle" data-id="${escapeHTML(chapter.id)}">
+                    ${isPublished ? "Unpublish" : "Publish"}
+                  </button>
+                  <button class="ch-btn ch-danger"
+                    data-action="delete" data-id="${escapeHTML(chapter.id)}">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>`;
+        }).join("");
+      }
+
+      function updateStats() {
+        const total = state.chapters.length;
+        const published = state.chapters.filter(
+          (chapter) => chapter.is_published === true
+        ).length;
+
+        el("ch-total").textContent = total;
+        el("ch-published").textContent = published;
+        el("ch-drafts").textContent = total - published;
+      }
+
+      async function loadReferenceMaps() {
+        const { data: classes, error: classError } = await db
+          .from("classes")
+          .select("id, name, is_published");
+
+        if (classError) throw classError;
+
+        const { data: subjects, error: subjectError } = await db
+          .from("subjects")
+          .select("id, name, class_id, is_published");
+
+        if (subjectError) throw subjectError;
+
+        state.classes = classes || [];
+        state.subjects = subjects || [];
+
+        state._classMap = Object.fromEntries(
+          state.classes.map((item) => [item.id, item])
+        );
+
+        state._subjectMap = Object.fromEntries(
+          state.subjects.map((item) => [item.id, item])
+        );
+
+        fillSelect(el("ch-class"), state.classes, "Select Class");
+        fillSelect(
+          el("ch-filter-class"),
+          state.classes,
+          "All Classes"
+        );
+
+        await updateSubjectFilter();
+      }
+
+      async function updateSubjectFilter() {
+        const classId = el("ch-filter-class").value;
+        const subjects = classId
+          ? state.subjects.filter(
+              (subject) => String(subject.class_id) === String(classId)
+            )
+          : state.subjects;
+
+        const previous = el("ch-filter-subject").value;
+        fillSelect(
+          el("ch-filter-subject"),
+          subjects,
+          "All Subjects",
+          previous
+        );
+
+        if (
+          previous &&
+          !subjects.some((subject) => String(subject.id) === String(previous))
+        ) {
+          el("ch-filter-subject").value = "";
+        }
+      }
+
+      function resetForm() {
+        state.editingId = null;
+        el("ch-form").reset();
+        el("ch-is-published").checked = true;
+        el("ch-form-title").textContent = "Add New Chapter";
+        el("ch-save").textContent = "Add Chapter";
+        el("ch-cancel").classList.add("ch-hidden");
+
+        fillSelect(el("ch-class"), state.classes, "Select Class");
+        fillSelect(el("ch-subject"), [], "Select a class first");
+        el("ch-subject").disabled = true;
+      }
+
+      async function refreshData() {
+        await loadReferenceMaps();
+        await loadAllChapters();
+      }
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        clearMessage();
+
+        if (state.busy) return;
+
+        const classId = el("ch-class").value;
+        const subjectId = el("ch-subject").value;
+        const name = el("ch-name").value.trim();
+        const isPublished = el("ch-is-published").checked;
+
+        if (!classId || !subjectId || !name) {
+          showMessage("Please select a class, subject and chapter name.", "error");
+          return;
+        }
+
+        const subject = state._subjectMap?.[subjectId];
+
+        if (!subject || String(subject.class_id) !== String(classId)) {
+          showMessage("The selected subject does not belong to that class.", "error");
+          return;
+        }
+
+        setBusy(true);
+
+        try {
+          const payload = {
+            subject_id: subjectId,
+            name,
+            is_published: isPublished
+          };
+
+          let result;
+
+          if (state.editingId) {
+            result = await db
+              .from("chapters")
+              .update(payload)
+              .eq("id", state.editingId)
+              .select("id");
+          } else {
+            result = await db
+              .from("chapters")
+              .insert(payload)
+              .select("id");
+          }
+
+          if (result.error) throw result.error;
+
+          if (!result.data || result.data.length === 0) {
+            throw new Error(
+              "No row was changed. Check admin permissions and Row Level Security policies."
+            );
+          }
+
+          const wasEditing = Boolean(state.editingId);
+
+          resetForm();
+          await loadAllChapters();
+
+          showMessage(
+            wasEditing
+              ? "Chapter updated successfully."
+              : "Chapter added successfully.",
+            "success"
+          );
+        } catch (error) {
+          console.error("Saving chapter failed:", error);
+          showMessage(
+            "Could not save chapter: " + (error.message || "Unknown error"),
+            "error"
+          );
+        } finally {
+          setBusy(false);
+          el("ch-subject").disabled = !el("ch-class").value;
+        }
+      }
+
+      async function editChapter(chapter) {
+        clearMessage();
+
+        const subject = state._subjectMap?.[chapter.subject_id];
+
+        if (!subject) {
+          showMessage("The subject for this chapter could not be found.", "error");
+          return;
+        }
+
+        state.editingId = chapter.id;
+        el("ch-form-title").textContent = "Edit Chapter";
+        el("ch-cancel").classList.remove("ch-hidden");
+        el("ch-class").value = subject.class_id;
+
+        await loadSubjects(subject.class_id, subject.id);
+
+        el("ch-name").value = chapter.name;
+        el("ch-is-published").checked = chapter.is_published === true;
+        el("ch-save").textContent = "Update Chapter";
+
+        el("ch-form-card").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+
+      async function togglePublish(chapter) {
+        const newStatus = chapter.is_published !== true;
+        const action = newStatus ? "publish" : "unpublish";
+
+        if (!confirm(`Are you sure you want to ${action} "${chapter.name}"?`)) {
+          return;
+        }
+
+        clearMessage();
+
+        try {
+          const { data, error } = await db
+            .from("chapters")
+            .update({ is_published: newStatus })
+            .eq("id", chapter.id)
+            .select("id");
+
+          if (error) throw error;
+
+          if (!data || data.length === 0) {
+            throw new Error("No chapter was updated. Check admin permissions.");
+          }
+
+          await loadAllChapters();
+
+          showMessage(
+            `Chapter ${newStatus ? "published" : "moved to draft"} successfully.`,
+            "success"
+          );
+        } catch (error) {
+          console.error("Updating chapter status failed:", error);
+          showMessage(
+            "Could not change chapter status: " + (error.message || "Unknown error"),
+            "error"
+          );
+        }
+      }
+
+      async function deleteChapter(chapter) {
+        if (
+          !confirm(
+            `Delete "${chapter.name}" permanently? This cannot be undone.`
+          )
+        ) {
+          return;
+        }
+
+        clearMessage();
+
+        try {
+          const { data, error } = await db
+            .from("chapters")
+            .delete()
+            .eq("id", chapter.id)
+            .select("id");
+
+          if (error) throw error;
+
+          if (!data || data.length === 0) {
+            throw new Error(
+              "Chapter was not deleted. Check admin permissions or linked notes."
+            );
+          }
+
+          if (String(state.editingId) === String(chapter.id)) {
+            resetForm();
+          }
+
+          await loadAllChapters();
+          showMessage("Chapter deleted successfully.", "success");
+        } catch (error) {
+          console.error("Deleting chapter failed:", error);
+          showMessage(
+            "Could not delete chapter. It may have linked notes or other records. " +
+              (error.message || ""),
+            "error"
+          );
+        }
+      }
+
+      async function handleListAction(event) {
+        const button = event.target.closest("button[data-action]");
+        if (!button) return;
+
+        const chapter = state.chapters.find(
+          (item) => String(item.id) === String(button.dataset.id)
+        );
+
+        if (!chapter) return;
+
+        button.disabled = true;
+
+        try {
+          if (button.dataset.action === "edit") {
+            await editChapter(chapter);
+          } else if (button.dataset.action === "toggle") {
+            await togglePublish(chapter);
+          } else if (button.dataset.action === "delete") {
+            await deleteChapter(chapter);
+          }
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message || "An unexpected error occurred.", "error");
+        } finally {
+          button.disabled = false;
+        }
+      }
+
+      async function init() {
+        if (!db) {
+          showMessage(
+            "Supabase client not found. Check that ../js/supabase.js loads correctly and sets window.supabaseClient.",
+            "error"
+          );
+          el("ch-list").innerHTML = `
+            <tr><td colspan="5" class="ch-empty">
+              Supabase connection is not initialized.
+            </td></tr>`;
+          return;
+        }
+
+        el("ch-form").addEventListener("submit", handleSubmit);
+        el("ch-cancel").addEventListener("click", () => {
+          resetForm();
+          clearMessage();
+        });
+
+        el("ch-class").addEventListener("change", async () => {
+          clearMessage();
+          try {
+            await loadSubjects(el("ch-class").value);
+          } catch (error) {
+            showMessage("Could not load subjects: " + error.message, "error");
+          }
+        });
+
+        el("ch-filter-class").addEventListener("change", async () => {
+          await updateSubjectFilter();
+          renderChapters();
+        });
+
+        el("ch-filter-subject").addEventListener("change", renderChapters);
+        el("ch-search").addEventListener("input", renderChapters);
+        el("ch-list").addEventListener("click", handleListAction);
+
+        try {
+          await refreshData();
+          showMessage("Chapters loaded from Supabase.", "success");
+          setTimeout(() => {
+            const box = el("ch-message");
+            if (box.textContent === "Chapters loaded from Supabase.") {
+              clearMessage();
+            }
+          }, 2500);
+        } catch (error) {
+          console.error("Chapter page initialization failed:", error);
+          showMessage(
+            "Could not load chapter data: " +
+              (error.message || "Unknown error") +
+              ". Check Supabase connection and admin RLS policies.",
+            "error"
+          );
+          el("ch-list").innerHTML = `
+            <tr><td colspan="5" class="ch-empty">
+              Could not load data. Check the error message above.
+            </td></tr>`;
+        }
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
