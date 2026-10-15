@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Notes | Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .notes-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 50px;
+    }
+
+    .notes-hero {
+      padding: 28px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0b2c4d, #175784);
+      color: white;
+      margin-bottom: 24px;
+    }
+
+    .notes-hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(25px, 4vw, 36px);
+    }
+
+    .notes-hero p {
+      margin: 0;
+      color: #e2edf6;
+    }
+
+    .notes-filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .notes-filters input,
+    .notes-filters select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #d8e0e8;
+      border-radius: 10px;
+      background: white;
+      color: #172b3c;
+      font: inherit;
+    }
+
+    .notes-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .student-note {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid #e0e7ef;
+      border-radius: 15px;
+      background: white;
+      box-shadow: 0 5px 20px rgba(15, 42, 66, 0.05);
+    }
+
+    .student-note h2 {
+      font-size: 19px;
+      line-height: 1.4;
+      margin: 12px 0 8px;
+      overflow-wrap: anywhere;
+      color: #102f4a;
+    }
+
+    .note-location {
+      font-size: 13px;
+      color: #526779;
+      line-height: 1.7;
+      margin: 8px 0;
+    }
+
+    .note-description {
+      color: #465a6c;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .note-pill {
+      display: inline-block;
+      border-radius: 20px;
+      background: #eaf3fb;
+      color: #16466b;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .note-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .note-actions button {
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-pdf {
+      background: #0b2c4d;
+      color: white;
+    }
+
+    .download-pdf {
+      background: #e8f5ec;
+      color: #176536;
+    }
+
+    .note-actions button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .notes-state {
+      padding: 30px 18px;
+      text-align: center;
+      color: #536779;
+      background: #f7f9fb;
+      border: 1px dashed #cbd7e2;
+      border-radius: 12px;
+      grid-column: 1 / -1;
+      overflow-wrap: anywhere;
+    }
+
+    .notes-error {
+      color: #a11b1b;
+    }
+
+    @media (max-width: 760px) {
+      .notes-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .notes-hero {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .notes-page {
+        padding: 18px 12px 35px;
+      }
+
+      .notes-filters {
+        grid-template-columns: 1fr;
+      }
+
+      .student-note {
+        padding: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="notes-page">
+    <section class="notes-hero">
+      <h1>Study Notes</h1>
+      <p>Find your class notes, revise chapters and access published PDFs.</p>
+    </section>
+
+    <section class="notes-filters" aria-label="Filter study notes">
+      <input id="notesSearch" type="search" placeholder="Search notes or chapter...">
+
+      <select id="classFilter">
+        <option value="">All classes</option>
+      </select>
+
+      <select id="subjectFilter">
+        <option value="">All subjects</option>
+      </select>
+
+      <select id="chapterFilter">
+        <option value="">All chapters</option>
+      </select>
+    </section>
+
+    <div class="notes-summary">
+      <strong id="notesCount">Loading notes...</strong>
+      <button id="refreshNotes" type="button">Refresh</button>
+    </div>
+
+    <section id="notesGrid" class="notes-grid" aria-live="polite">
+      <div class="notes-state">Loading published notes...</div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/notes.js"></script>
+</body>
+</html>

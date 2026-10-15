@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes Management · Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin-notes.css">
+</head>
+<body data-page="admin">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">A</span>
+      <span><b>Aandpur</b><small>LEARNING PLATFORM</small></span>
+    </a>
+
+    <div class="nav-label">MANAGEMENT</div>
+    <nav class="side-nav">
+      <a class="nav-item" href="dashboard.html"><span>▦</span> Overview</a>
+      <a class="nav-item" href="classes.html"><span>▤</span> Classes</a>
+      <a class="nav-item" href="subjects.html"><span>◈</span> Subjects</a>
+      <a class="nav-item" href="chapters.html"><span>≡</span> Chapters</a>
+      <a class="nav-item active" href="notes.html"><span>▧</span> Notes</a>
+      <a class="nav-item" href="questions.html"><span>☷</span> Questions</a>
+      <a class="nav-item" href="quizzes.html"><span>✦</span> Quizzes</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a class="nav-item" href="../index.html"><span>↪</span> Back to portal</a>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" data-menu-toggle aria-label="Open menu">☰</button>
+      <div class="crumb">Management <span>/</span> Notes</div>
+      <div class="top-actions">
+        <button class="icon-btn" data-theme-toggle title="Toggle theme">◐</button>
+        <span class="top-divider"></span>
+        <div class="user-chip">
+          <span class="avatar admin-avatar">AD</span>
+          <span class="user-meta"><b>Workspace Admin</b><small>Administrator</small></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content notes-page">
+      <div class="welcome-row">
+        <div>
+          <div class="eyebrow">ADMIN WORKSPACE / CONTENT</div>
+          <h1>Notes Management</h1>
+          <p class="muted">Upload PDFs and manage chapter-wise learning material.</p>
+        </div>
+        <button class="primary-button" id="newNoteBtn" type="button">＋ Add new note</button>
+      </div>
+
+      <div class="notes-stats">
+        <article class="stat-card">
+          <span class="stat-label">Total notes</span>
+          <strong id="totalNotes">—</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Published</span>
+          <strong id="publishedNotes">—</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Drafts</span>
+          <strong id="draftNotes">—</strong>
+        </article>
+      </div>
+
+      <section class="panel-card note-editor" id="noteEditor">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">NOTE DETAILS</div>
+            <h2 id="editorHeading">Create a note</h2>
+          </div>
+          <button class="secondary-button" id="cancelEditBtn" type="button">Cancel</button>
+        </div>
+
+        <form id="noteForm">
+          <input type="hidden" id="noteId">
+
+          <div class="form-grid">
+            <label class="field">
+              <span>Class *</span>
+              <select id="classSelect" required>
+                <option value="">Select class</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Subject *</span>
+              <select id="subjectSelect" required disabled>
+                <option value="">Select subject</option>
+              </select>
+            </label>
+
+            <label class="field full-field">
+              <span>Chapter *</span>
+              <select id="chapterSelect" required disabled>
+                <option value="">Select chapter</option>
+              </select>
+            </label>
+
+            <label class="field full-field">
+              <span>Note title *</span>
+              <input id="noteTitle" type="text" maxlength="200"
+                     placeholder="e.g. Electric Charges and Fields — Revision Notes" required>
+            </label>
+
+            <label class="field full-field">
+              <span>Description</span>
+              <textarea id="noteDescription" rows="3"
+                        placeholder="Briefly describe what these notes cover"></textarea>
+            </label>
+
+            <label class="field">
+              <span>Display order</span>
+              <input id="sortOrder" type="number" min="0" step="1" value="0">
+            </label>
+
+            <label class="field">
+              <span>PDF file (PDF only, max 20 MB)</span>
+              <input id="pdfFile" type="file" accept="application/pdf,.pdf">
+              <small id="currentFileHint">Choose a PDF to attach. A file is required for a new note.</small>
+            </label>
+
+            <label class="field full-field">
+              <span>Optional text content</span>
+              <textarea id="noteContent" rows="4"
+                        placeholder="Optional text or extra instructions for students"></textarea>
+            </label>
+
+            <label class="field">
+              <span>Publication status</span>
+              <select id="noteStatus">
+                <option value="draft">Save as draft</option>
+                <option value="published">Publish to students</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-button" id="saveDraftBtn" type="submit">Save note</button>
+            <span class="muted" id="formMessage" role="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel-card notes-list-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">CONTENT LIBRARY</div>
+            <h2>All notes</h2>
+          </div>
+          <button class="secondary-button" id="refreshNotesBtn" type="button">↻ Refresh</button>
+        </div>
+
+        <div class="notes-toolbar">
+          <input id="searchNotes" type="search" placeholder="Search title or chapter…">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
+        </div>
+
+        <div id="notesMessage" class="notes-message" role="status">Loading notes…</div>
+        <div id="notesList" class="notes-list"></div>
+      </section>
+
+      <footer class="page-footer">
+        <span>© 2026 Aandpur Learning Platform</span>
+        <span>Built with purpose <b>✦</b></span>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="../js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/admin-guard.js"></script>
+<script src="../js/logout.js"></script>
+<script src="../js/admin-notes.js"></script>
+</body>
+</html>

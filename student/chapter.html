@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123c68">
+  <meta name="description" content="Study chapter notes, PYQs, practice questions and quizzes on Aandpur.">
+
+  <title>Chapter Study Hub | Aandpur</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #172033;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px 20px 50px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 800;
+      color: #123c68;
+    }
+
+    .brand span {
+      color: #16a36a;
+    }
+
+    .back-link {
+      color: #123c68;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .hero {
+      background: linear-gradient(125deg, #10365e, #176a80);
+      color: white;
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 30px;
+      overflow-wrap: anywhere;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      background: #ffffff20;
+      border: 1px solid #ffffff35;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.3;
+    }
+
+    .hero p {
+      margin: 0;
+      line-height: 1.8;
+      color: #e0edf5;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 13px;
+      color: #d4e6f2;
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      background: #ffffff1c;
+      border: 1px solid #ffffff30;
+      border-radius: 11px;
+      padding: 12px 15px;
+      min-width: 115px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: #e0edf5;
+    }
+
+    .section-heading {
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: #718096;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .resource-card {
+      background: white;
+      border: 1px solid #e4eaf2;
+      border-radius: 17px;
+      padding: 23px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px #16365312;
+    }
+
+    .resource-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      font-size: 25px;
+      margin-bottom: 16px;
+    }
+
+    .notes-icon {
+      background: #e7f0ff;
+    }
+
+    .pyqs-icon {
+      background: #f0eaff;
+    }
+
+    .practice-icon {
+      background: #e2f8ef;
+    }
+
+    .quiz-icon {
+      background: #fff1dc;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 9px;
+      font-size: 19px;
+    }
+
+    .resource-card p {
+      margin: 0 0 20px;
+      color: #718096;
+      font-size: 14px;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .resource-btn {
+      display: block;
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: #123c68;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background .2s;
+    }
+
+    .resource-btn:hover {
+      background: #176a80;
+    }
+
+    .message {
+      padding: 30px 20px;
+      background: white;
+      border: 1px solid #e4eaf2;
+      border-radius: 15px;
+      text-align: center;
+      line-height: 1.8;
+      color: #64748b;
+    }
+
+    .message strong {
+      display: block;
+      color: #172033;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .message a {
+      color: #123c68;
+      font-weight: 700;
+    }
+
+    .error {
+      color: #b42318;
+    }
+
+    .footer-note {
+      margin-top: 25px;
+      color: #718096;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 18px 14px 35px;
+      }
+
+      .hero {
+        padding: 24px 19px;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resource-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="topbar">
+      <div class="brand">Aandpur<span>.</span></div>
+      <a class="back-link" id="backToChapters" href="subjects.html">
+        ← Back to Chapters
+      </a>
+    </header>
+
+    <section class="hero">
+      <div class="breadcrumbs">
+        <span id="breadcrumbClass">Class —</span>
+        <span>›</span>
+        <span id="breadcrumbSubject">Subject</span>
+        <span>›</span>
+        <span id="breadcrumbChapter">Chapter</span>
+      </div>
+
+      <span class="eyebrow">YOUR CHAPTER STUDY HUB</span>
+
+      <h1 id="chapterTitle">Loading Chapter...</h1>
+
+      <p>
+        Choose a learning resource below and continue studying this chapter.
+        Your notes, previous year questions, practice and quizzes are organised
+        in separate sections.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="className">—</strong>
+          <span>Your Class</span>
+        </div>
+
+        <div class="stat">
+          <strong id="subjectName">—</strong>
+          <span>Subject</span>
+        </div>
+
+        <div class="stat">
+          <strong>4 Resources</strong>
+          <span>Learning Sections</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Explore Chapter Resources</h2>
+        <p>Select any section to open its dedicated page.</p>
+      </div>
+
+      <div id="pageMessage" class="message">
+        Loading chapter details...
+      </div>
+
+      <div class="resource-grid" id="resourceGrid" hidden>
+
+        <article class="resource-card">
+          <div class="resource-icon notes-icon" aria-hidden="true">📚</div>
+          <h3>Study Notes</h3>
+          <p>
+            Read chapter notes and access published PDF study material
+            to revise important concepts.
+          </p>
+          <a class="resource-btn" id="notesLink" href="notes.html">
+            Open Notes →
+          </a>
+        </article>
+
+        <article class="resource-card">
+          <div class="resource-icon pyqs-icon" aria-hidden="true">📝</div>
+          <h3>Previous Year Questions</h3>
+          <p>
+            Practise board exam questions from previous years
+            and review available solutions.
+          </p>
+          <a class="resource-btn" id="pyqsLink" href="pyqs.html">
+            Explore PYQs →
+          </a>
+        </article>
+
+        <article class="resource-card">
+          <div class="resource-icon practice-icon" aria-hidden="true">✍️</div>
+          <h3>Practice Questions</h3>
+          <p>
+            Strengthen your understanding with chapter-wise
+            questions and available explanations.
+          </p>
+          <a class="resource-btn" id="practiceLink" href="practice.html">
+            Start Practice →
+          </a>
+        </article>
+
+        <article class="resource-card">
+          <div class="resource-icon quiz-icon" aria-hidden="true">🧠</div>
+          <h3>Chapter Quizzes</h3>
+          <p>
+            Test your concepts with available chapter quizzes
+            and check your performance.
+          </p>
+          <a class="resource-btn" id="quizLink" href="quizzes.html">
+            Start Quiz →
+          </a>
+        </article>
+
+      </div>
+
+      <p class="footer-note">
+        Keep learning, practise regularly and track your progress with Aandpur.
+      </p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/student-guard.js"></script>
+  <script src="../js/chapter.js"></script>
+</body>
+</html>
