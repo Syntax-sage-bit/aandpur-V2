@@ -111,7 +111,7 @@
             )
           )
         `)
-        .eq("is_published", true)
+        .eq("status", "published")
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });
 
