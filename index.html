@@ -1,59 +1,26 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aandpur Learning Platform — learn, practice, and make progress with structured study resources.">
   <title>Aandpur Learning Platform</title>
+
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
 
-  <style>
-    .landing-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .login-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 18px;
-      border-radius: 9px;
-      background: #123b63;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .login-link:hover {
-      opacity: 0.9;
-    }
-
-    @media (max-width: 480px) {
-      .nav-actions {
-        gap: 8px;
-      }
-
-      .login-link {
-        padding: 9px 12px;
-        font-size: 13px;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body class="landing-body">
-  <header class="landing-nav">
-    <a class="brand" href="index.html">
+<body class="landing-body home-body">
+
+  <!-- NAVIGATION -->
+  <header class="home-nav">
+
+    <a class="brand home-brand" href="#home" aria-label="Aandpur home">
       <span class="brand-mark">A</span>
       <span>
         <b>Aandpur</b>
@@ -61,56 +28,608 @@
       </span>
     </a>
 
-    <div class="nav-actions">
-      <a class="login-link" href="auth.html">Login / Sign Up</a>
-      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+    <button
+      class="home-menu-toggle"
+      id="homeMenuToggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false">
+      ☰
+    </button>
+
+    <nav class="home-nav-links" id="homeNavLinks" aria-label="Main navigation">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#features">Features</a>
+      <a href="#mission">Mission</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="home-nav-actions">
+      <a class="home-login" href="auth.html">Login</a>
+
+      <a class="home-nav-cta" href="auth.html">
+        Start Learning <span>↗</span>
+      </a>
+
+      <button
+        class="theme-toggle home-theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="Toggle theme">
         ◐ <span>Theme</span>
       </button>
     </div>
+
   </header>
 
-  <main class="landing-main">
-    <div class="eyebrow">
-      <span class="status-dot"></span>
-      YOUR LEARNING SPACE
-    </div>
+  <main>
 
-    <h1>
-      Learn with purpose.<br>
-      <span>Grow with Aandpur.</span>
-    </h1>
+    <!-- HERO SECTION -->
+    <section class="home-hero" id="home">
 
-    <p class="landing-copy">
-      A focused space for learning, practice, and progress.
-      Sign in to continue to your workspace.
-    </p>
+      <div class="home-hero-grid">
 
-    <div class="portal-grid">
-      <a class="portal-card student-portal" href="auth.html">
-        <div class="portal-icon">↗</div>
-        <span class="card-kicker">FOR LEARNERS</span>
-        <h2>Student Panel</h2>
-        <p>Explore your classes, subjects, and learning journey from one simple dashboard.</p>
-        <span class="portal-link">Student login <b>→</b></span>
+        <div class="home-hero-copy">
+
+          <div class="home-eyebrow">
+            <span></span>
+            WELCOME TO AANDPUR LEARNING PLATFORM
+          </div>
+
+          <h1>
+            Learn Smarter.<br>
+            <span>Achieve More.</span>
+          </h1>
+
+          <p class="home-lead">
+            A modern learning platform designed to help students
+            understand concepts, practice effectively, and prepare
+            with confidence.
+          </p>
+
+          <div class="home-hero-actions">
+
+            <a href="auth.html" class="home-button home-button-primary">
+              Start Learning <span>→</span>
+            </a>
+
+            <a href="#about" class="home-button home-button-secondary">
+              Explore Aandpur
+            </a>
+
+          </div>
+
+          <div class="home-steps" aria-label="Your learning journey">
+
+            <div>
+              <span>01</span>
+              <b>Learn</b>
+              <small>Understand concepts</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <span>02</span>
+              <b>Practice</b>
+              <small>Build confidence</small>
+            </div>
+
+            <i></i>
+
+            <div>
+              <span>03</span>
+              <b>Improve</b>
+              <small>Track your progress</small>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- DASHBOARD PREVIEW -->
+        <div class="home-hero-visual" aria-label="Illustration of a learning dashboard">
+
+          <div class="home-visual-glow"></div>
+
+          <div class="home-float home-float-top">
+            <span class="home-float-icon">✓</span>
+
+            <span>
+              <b>Keep going!</b>
+              <small>Every step counts</small>
+            </span>
+          </div>
+
+          <div class="home-dashboard-preview">
+
+            <div class="home-preview-top">
+              <div>
+                <span class="home-preview-dot"></span>
+                <span class="home-preview-dot"></span>
+                <span class="home-preview-dot"></span>
+              </div>
+
+              <span>YOUR LEARNING SPACE</span>
+            </div>
+
+            <div class="home-preview-welcome">
+              <small>YOUR JOURNEY STARTS HERE</small>
+              <h3>Welcome back, learner 👋</h3>
+              <p>Small steps lead to big progress.</p>
+            </div>
+
+            <div class="home-preview-stats">
+
+              <div>
+                <span class="home-mini-icon blue">▤</span>
+                <small>Study resources</small>
+                <b>Learn</b>
+              </div>
+
+              <div>
+                <span class="home-mini-icon green">✦</span>
+                <small>Practice regularly</small>
+                <b>Practice</b>
+              </div>
+
+            </div>
+
+            <div class="home-preview-course">
+
+              <div class="home-course-icon">∑</div>
+
+              <div class="home-course-info">
+                <b>Keep building your skills</b>
+                <small>Choose a class to get started</small>
+
+                <div class="home-progress">
+                  <span></span>
+                </div>
+              </div>
+
+              <span class="home-course-arrow">→</span>
+
+            </div>
+
+            <div class="home-preview-bottom">
+              <span>✦ A clear path to learning</span>
+              <span>MADE FOR STUDENTS</span>
+            </div>
+
+          </div>
+
+          <div class="home-float home-float-bottom">
+            <span class="home-float-icon purple">✧</span>
+
+            <span>
+              <b>Learn at your pace</b>
+              <small>One chapter at a time</small>
+            </span>
+          </div>
+
+          <div class="home-orbit home-orbit-one"></div>
+          <div class="home-orbit home-orbit-two"></div>
+
+        </div>
+
+      </div>
+
+      <div class="home-hero-bottom">
+        <span>BUILT FOR FOCUSED LEARNING</span>
+        <span>LEARN · PRACTICE · ACHIEVE</span>
+        <span>YOUR NEXT STEP STARTS HERE ↘</span>
+      </div>
+
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="home-section home-about" id="about">
+
+      <div class="home-section-container">
+
+        <div class="home-section-intro">
+          <span class="home-section-label">ABOUT AANDPUR</span>
+
+          <h2>
+            A better way to learn.<br>
+            <span>A clearer path to progress.</span>
+          </h2>
+
+          <p>
+            Aandpur is built with a simple idea — students should
+            have access to structured, reliable, and effective
+            learning resources in one place.
+          </p>
+        </div>
+
+        <div class="home-about-grid">
+
+          <div class="home-about-copy">
+
+            <p>
+              We are building Aandpur as a student-first learning
+              platform where studying becomes more organized,
+              interactive, and effective.
+            </p>
+
+            <p>
+              From chapter-wise notes and previous year questions
+              to practice problems and quizzes, resources are
+              designed to support students throughout their
+              learning journey.
+            </p>
+
+            <a href="#features" class="home-text-link">
+              Discover our features <span>→</span>
+            </a>
+
+          </div>
+
+          <div class="home-highlights">
+
+            <article>
+              <span>01</span>
+              <div>
+                <h3>Student First</h3>
+                <p>
+                  Designed around a clear, useful learning experience.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span>02</span>
+              <div>
+                <h3>Structured Learning</h3>
+                <p>
+                  Organized resources make preparation more systematic.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span>03</span>
+              <div>
+                <h3>Continuous Improvement</h3>
+                <p>
+                  Learn, practice, identify gaps, and improve consistently.
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="home-section home-features" id="features">
+
+      <div class="home-section-container">
+
+        <div class="home-section-intro home-centered">
+          <span class="home-section-label">WHAT WE OFFER</span>
+
+          <h2>
+            Everything you need to<br>
+            <span>learn better.</span>
+          </h2>
+
+          <p>
+            Aandpur brings essential learning resources together
+            in one simple platform.
+          </p>
+        </div>
+
+        <div class="home-features-grid">
+
+          <article class="home-feature-card home-feature-featured">
+            <span class="home-feature-icon">▤</span>
+            <span class="home-feature-number">01</span>
+
+            <h3>Detailed Notes</h3>
+
+            <p>
+              Chapter-wise study material designed to make difficult
+              concepts easier to understand.
+            </p>
+
+            <a href="auth.html">
+              Explore learning <span>↗</span>
+            </a>
+          </article>
+
+          <article class="home-feature-card">
+            <span class="home-feature-icon">◷</span>
+            <span class="home-feature-number">02</span>
+
+            <h3>Previous Year Questions</h3>
+
+            <p>
+              Practice previous examination questions and understand
+              important patterns.
+            </p>
+
+            <a href="auth.html">
+              Explore learning <span>↗</span>
+            </a>
+          </article>
+
+          <article class="home-feature-card">
+            <span class="home-feature-icon">✎</span>
+            <span class="home-feature-number">03</span>
+
+            <h3>Practice Questions</h3>
+
+            <p>
+              Strengthen your concepts with organized practice questions.
+            </p>
+
+            <a href="auth.html">
+              Explore learning <span>↗</span>
+            </a>
+          </article>
+
+          <article class="home-feature-card">
+            <span class="home-feature-icon">✦</span>
+            <span class="home-feature-number">04</span>
+
+            <h3>Quizzes</h3>
+
+            <p>
+              Check your understanding and reinforce what you have learned.
+            </p>
+
+            <a href="auth.html">
+              Explore learning <span>↗</span>
+            </a>
+          </article>
+
+          <article class="home-feature-card">
+            <span class="home-feature-icon">↗</span>
+            <span class="home-feature-number">05</span>
+
+            <h3>Progress Tracking</h3>
+
+            <p>
+              Keep your learning journey organized and see what to
+              focus on next.
+            </p>
+
+            <a href="auth.html">
+              Explore learning <span>↗</span>
+            </a>
+          </article>
+
+          <article class="home-feature-card home-feature-coming">
+            <span class="home-feature-icon">✧</span>
+            <span class="home-feature-number">06</span>
+            <span class="home-coming-label">IN DEVELOPMENT</span>
+
+            <h3>AI Learning Tools</h3>
+
+            <p>
+              Future tools to support doubt-solving and more
+              personalized practice.
+            </p>
+
+            <span class="home-feature-note">More to come</span>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- MISSION SECTION -->
+    <section class="home-mission" id="mission">
+
+      <div class="home-mission-inner">
+
+        <div class="home-mission-mark">A</div>
+
+        <span class="home-section-label">OUR MISSION</span>
+
+        <h2>
+          Make learning more
+          <span>organized, accessible,</span>
+          and effective.
+        </h2>
+
+        <p>
+          Our mission is to help students build stronger understanding
+          through structured resources, consistent practice, and a
+          learning experience that keeps them moving forward.
+        </p>
+
+        <a href="auth.html" class="home-button home-button-primary">
+          Begin your journey <span>→</span>
+        </a>
+
+      </div>
+
+      <div class="home-mission-decoration"></div>
+
+    </section>
+
+    <!-- LEADERSHIP SECTION -->
+    <section class="home-section home-leadership" id="leadership">
+
+      <div class="home-section-container">
+
+        <div class="home-section-intro home-centered">
+          <span class="home-section-label">OUR LEADERSHIP</span>
+
+          <h2>
+            Meet the people behind<br>
+            <span>Aandpur.</span>
+          </h2>
+
+          <p>
+            Building the vision and working towards a better
+            learning experience for students.
+          </p>
+        </div>
+
+        <div class="home-leader-grid">
+
+          <article class="home-leader-card">
+
+            <div class="home-leader-art">
+              <div class="home-person-placeholder">D</div>
+              <span>FOUNDER</span>
+            </div>
+
+            <div class="home-leader-info">
+              <small>FOUNDER</small>
+              <h3>Divyansh Bhadauriya</h3>
+
+              <p>
+                Building Aandpur with a focus on creating a modern,
+                organized, and student-focused learning platform.
+              </p>
+            </div>
+
+          </article>
+
+          <div class="home-leadership-note">
+
+            <span class="home-note-mark">✦</span>
+
+            <h3>Built with students in mind.</h3>
+
+            <p>
+              Aandpur is a growing project. The goal is to make
+              useful learning resources easier to discover and use,
+              one improvement at a time.
+            </p>
+
+            <a href="#contact" class="home-text-link">
+              Get in touch <span>→</span>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="home-contact" id="contact">
+
+      <div>
+        <span class="home-section-label">READY TO GET STARTED?</span>
+
+        <h2>
+          Your learning journey<br>
+          <span>starts with one step.</span>
+        </h2>
+
+        <p>Sign in to explore your learning workspace.</p>
+      </div>
+
+      <a href="auth.html" class="home-button home-button-primary">
+        Go to Aandpur <span>→</span>
       </a>
 
-      <a class="portal-card admin-portal" href="auth.html">
-        <div class="portal-icon">⌘</div>
-        <span class="card-kicker">FOR YOUR TEAM</span>
-        <h2>Admin Panel</h2>
-        <p>Manage classes and subjects through a clear, organised content workspace.</p>
-        <span class="portal-link">Admin login <b>→</b></span>
-      </a>
-    </div>
+    </section>
 
-    <div class="landing-foot">
-      <span>AANDPUR · LEARN BETTER EVERY DAY</span>
-      <span>Built for focused learning</span>
-    </div>
   </main>
 
+  <!-- FOOTER -->
+  <footer class="home-footer">
+
+    <div class="home-footer-top">
+
+      <div class="home-footer-brand">
+
+        <a class="brand" href="#home">
+          <span class="brand-mark">A</span>
+
+          <span>
+            <b>Aandpur</b>
+            <small>LEARNING PLATFORM</small>
+          </span>
+        </a>
+
+        <p>Learn. Practice. Achieve.</p>
+
+      </div>
+
+      <div class="home-footer-links">
+
+        <div>
+          <b>Explore</b>
+          <a href="#about">About Us</a>
+          <a href="#features">Features</a>
+          <a href="#mission">Mission</a>
+          <a href="#leadership">Leadership</a>
+        </div>
+
+        <div>
+          <b>Platform</b>
+          <a href="auth.html">Learning workspace</a>
+          <a href="auth.html">Student login</a>
+          <a href="auth.html">Admin login</a>
+        </div>
+
+        <div>
+          <b>Connect</b>
+          <a href="#contact">Contact</a>
+          <a href="mailto:hello@aandpur.com">Email</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="home-footer-bottom">
+      <span>© 2026 Aandpur Learning Platform. All rights reserved.</span>
+      <span>Built for focused learning.</span>
+    </div>
+
+  </footer>
+
+  <!-- EXISTING PROJECT SCRIPTS -->
   <script src="js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
+
+  <!-- MOBILE NAVIGATION -->
+  <script>
+    (() => {
+      const toggle = document.getElementById("homeMenuToggle");
+      const nav = document.getElementById("homeNavLinks");
+
+      if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+          const open = nav.classList.toggle("is-open");
+
+          toggle.setAttribute("aria-expanded", String(open));
+          toggle.setAttribute(
+            "aria-label",
+            open ? "Close navigation" : "Open navigation"
+          );
+        });
+
+        nav.querySelectorAll("a").forEach(link => {
+          link.addEventListener("click", () => {
+            nav.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      }
+    })();
+  </script>
+
 </body>
 </html>
