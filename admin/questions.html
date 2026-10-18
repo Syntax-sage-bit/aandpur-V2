@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Management · Aandpur</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin-questions.css">
+</head>
+<body data-page="admin">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">A</span>
+      <span><b>Aandpur</b><small>LEARNING PLATFORM</small></span>
+    </a>
+
+    <div class="nav-label">MANAGEMENT</div>
+    <nav class="side-nav">
+      <a class="nav-item" href="dashboard.html"><span>▦</span> Overview</a>
+      <a class="nav-item" href="classes.html"><span>▤</span> Classes</a>
+      <a class="nav-item" href="subjects.html"><span>◈</span> Subjects</a>
+      <a class="nav-item" href="chapters.html"><span>≡</span> Chapters</a>
+      <a class="nav-item" href="notes.html"><span>▧</span> Notes</a>
+      <a class="nav-item active" href="questions.html"><span>☷</span> Questions</a>
+      <a class="nav-item" href="quizzes.html"><span>✦</span> Quizzes</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a class="nav-item" href="../index.html"><span>↪</span> Back to portal</a>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <button class="mobile-menu" data-menu-toggle aria-label="Open menu">☰</button>
+      <div class="crumb">Management <span>/</span> Questions</div>
+      <div class="top-actions">
+        <button class="icon-btn" data-theme-toggle title="Toggle theme">◐</button>
+        <span class="top-divider"></span>
+        <div class="user-chip">
+          <span class="avatar admin-avatar">AD</span>
+          <span class="user-meta">
+            <b>Workspace Admin</b>
+            <small>Administrator</small>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content questions-page">
+      <div class="welcome-row">
+        <div>
+          <div class="eyebrow">ADMIN WORKSPACE / CONTENT</div>
+          <h1>Question Management</h1>
+          <p class="muted">Create, edit and organize practice questions, quiz MCQs and previous-year questions.</p>
+        </div>
+        <button class="primary-button" id="newQuestionBtn" type="button">
+          ＋ Add question
+        </button>
+      </div>
+
+      <div class="question-stats">
+        <article class="stat-card">
+          <span class="stat-label">Practice questions</span>
+          <strong id="practiceCount">—</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Quiz MCQs</span>
+          <strong id="quizCount">—</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">PYQs</span>
+          <strong id="pyqCount">—</strong>
+        </article>
+      </div>
+
+      <div class="question-tabs" role="tablist" aria-label="Question type">
+        <button class="question-tab active" type="button"
+          data-tab="practice" role="tab" aria-selected="true">
+          Practice Questions
+        </button>
+        <button class="question-tab" type="button"
+          data-tab="quiz" role="tab" aria-selected="false">
+          Quiz MCQs
+        </button>
+        <button class="question-tab" type="button"
+          data-tab="pyq" role="tab" aria-selected="false">
+          PYQs
+        </button>
+      </div>
+
+      <section class="panel-card question-editor" id="questionEditor">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">QUESTION DETAILS</div>
+            <h2 id="editorHeading">Create a practice question</h2>
+          </div>
+          <button class="secondary-button" id="cancelEditBtn" type="button">
+            Cancel
+          </button>
+        </div>
+
+        <form id="questionForm">
+          <input type="hidden" id="recordId">
+
+          <div class="form-grid">
+            <label class="field">
+              <span>Class *</span>
+              <select id="classSelect" required>
+                <option value="">Select class</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Subject *</span>
+              <select id="subjectSelect" required disabled>
+                <option value="">Select subject</option>
+              </select>
+            </label>
+
+            <label class="field full-field">
+              <span>Chapter *</span>
+              <select id="chapterSelect" required disabled>
+                <option value="">Select chapter</option>
+              </select>
+            </label>
+
+            <label class="field full-field">
+              <span>Question *</span>
+              <textarea id="questionText" rows="4" maxlength="12000"
+                required placeholder="Enter the complete question"></textarea>
+            </label>
+
+            <div class="field full-field mcq-fields" id="mcqFields">
+              <span>Answer options *</span>
+              <div class="option-grid">
+                <label class="field">
+                  <span>Option A</span>
+                  <input id="optionA" maxlength="2000" placeholder="Option A">
+                </label>
+                <label class="field">
+                  <span>Option B</span>
+                  <input id="optionB" maxlength="2000" placeholder="Option B">
+                </label>
+                <label class="field">
+                  <span>Option C</span>
+                  <input id="optionC" maxlength="2000" placeholder="Option C">
+                </label>
+                <label class="field">
+                  <span>Option D</span>
+                  <input id="optionD" maxlength="2000" placeholder="Option D">
+                </label>
+              </div>
+
+              <label class="field answer-field">
+                <span>Correct answer *</span>
+                <select id="correctAnswer">
+                  <option value="">Select correct option</option>
+                  <option value="A">Option A</option>
+                  <option value="B">Option B</option>
+                  <option value="C">Option C</option>
+                  <option value="D">Option D</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Difficulty</span>
+              <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+
+            <label class="field" id="marksField">
+              <span>Marks</span>
+              <input id="marks" type="number" min="1" max="100"
+                step="1" value="1">
+            </label>
+
+            <label class="field full-field" id="explanationField">
+              <span>Explanation / solution</span>
+              <textarea id="explanation" rows="4" maxlength="12000"
+                placeholder="Explain the answer or provide the solution"></textarea>
+            </label>
+
+            <div class="field" id="sourceField">
+              <span>Question source</span>
+              <select id="sourceType">
+                <option value="custom">Custom practice</option>
+                <option value="NCERT">NCERT</option>
+                <option value="Exemplar">NCERT Exemplar</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <label class="field" id="publishedField">
+              <span>Publication status</span>
+              <select id="isPublished">
+                <option value="true">Published to students</option>
+                <option value="false">Draft / unpublished</option>
+              </select>
+            </label>
+
+            <label class="field" id="examField">
+              <span>Exam name *</span>
+              <input id="examName" maxlength="200" placeholder="e.g. CBSE Board">
+            </label>
+
+            <label class="field" id="yearField">
+              <span>Exam year</span>
+              <input id="examYear" type="number" min="1950" max="2100"
+                step="1" placeholder="e.g. 2025">
+            </label>
+
+            <label class="field full-field" id="solutionField">
+              <span>PYQ solution</span>
+              <textarea id="pyqSolution" rows="4" maxlength="12000"
+                placeholder="Enter the answer or solution"></textarea>
+            </label>
+
+            <label class="field full-field" id="quizSelectField">
+              <span>Add to quiz (optional)</span>
+              <select id="quizSelect">
+                <option value="">Do not link to a quiz</option>
+              </select>
+              <small>
+                Choose an existing quiz to link this MCQ. If none exists,
+                create the quiz first in the Quizzes section.
+              </small>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-button" id="saveQuestionBtn" type="submit">
+              Save question
+            </button>
+            <span class="muted" id="formMessage" role="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel-card question-list-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="eyebrow">CONTENT LIBRARY</div>
+            <h2 id="listHeading">Practice questions</h2>
+          </div>
+          <button class="secondary-button" id="refreshQuestionsBtn" type="button">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="questions-toolbar">
+          <input id="searchQuestions" type="search"
+            placeholder="Search question or chapter…">
+          <select id="classFilter" aria-label="Filter by class">
+            <option value="all">All classes</option>
+          </select>
+          <select id="statusFilter" aria-label="Filter by publication">
+            <option value="all">All statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
+        </div>
+
+        <div id="questionsMessage" class="questions-message" role="status">
+          Loading questions…
+        </div>
+        <div id="questionsList" class="questions-list"></div>
+      </section>
+
+      <footer class="page-footer">
+        <span>© 2026 Aandpur Learning Platform</span>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="../js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/admin-guard.js"></script>
+<script src="../js/logout.js"></script>
+<script src="../js/admin-questions.js"></script>
+</body>
+</html>

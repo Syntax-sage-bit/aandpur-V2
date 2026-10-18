@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   const supabaseClient = window.supabaseClient;
 
@@ -15,8 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("authMessage");
 
   let isSignup = false;
+  let isRedirecting = false;
 
-  // Update the message shown on the page.
+  // Display a message on the page.
   function showMessage(text, isError = false) {
     message.textContent = text;
     message.style.color = isError ? "#dc2626" : "#15803d";
@@ -32,17 +34,28 @@ document.addEventListener("DOMContentLoaded", () => {
     nameField.hidden = !signup;
     displayName.required = signup;
 
-    // Signup is only available for students.
+    // Signup is available only for students.
     role.disabled = signup;
-    if (signup) role.value = "student";
 
-    title.textContent = signup ? "Create your account" : "Welcome back";
+    if (signup) {
+      role.value = "student";
+    }
+
+    title.textContent = signup
+      ? "Create your account"
+      : "Welcome back";
+
     subtitle.textContent = signup
       ? "Join Aandpur and start learning."
       : "Sign in to continue to Aandpur.";
 
-    submitButton.textContent = signup ? "Create Student Account" : "Login";
-    password.autocomplete = signup ? "new-password" : "current-password";
+    submitButton.textContent = signup
+      ? "Create Student Account"
+      : "Login";
+
+    password.autocomplete = signup
+      ? "new-password"
+      : "current-password";
 
     showMessage("");
   }
@@ -56,11 +69,31 @@ document.addEventListener("DOMContentLoaded", () => {
       "Supabase is not initialized. Check js/supabase.js and script order.",
       true
     );
+
     submitButton.disabled = true;
     return;
   }
 
-  // Create the student's profile after successful signup.
+  // Check whether the account is an authorised admin.
+  async function isAuthorisedAdmin(userId) {
+    const { data, error } = await supabaseClient
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Admin verification error:", error);
+
+      throw new Error(
+        "Could not verify admin access. Check admin_users table permissions."
+      );
+    }
+
+    return Boolean(data);
+  }
+
+  // Create or update the student's profile after signup.
   async function saveStudentProfile(user, fullName) {
     const { error } = await supabaseClient
       .from("profiles")
@@ -75,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (error) {
       console.error("Profile save error:", error);
+
       throw new Error(
         "Your account was created, but your profile could not be saved. " +
         "Please contact the administrator."
@@ -82,27 +116,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Check whether this account has been authorised as an admin.
-  async function isAuthorisedAdmin(userId) {
-    const { data, error } = await supabaseClient
-      .from("admin_users")
-      .select("user_id")
-      .eq("user_id", userId)
-      .maybeSingle();
+  // Restore an existing session when auth.html opens.
+  async function restoreExistingSession() {
+    try {
+      const {
+        data: { session },
+        error: sessionError
+      } = await supabaseClient.auth.getSession();
 
-    if (error) {
-      console.error("Admin verification error:", error);
-      throw new Error(
-        "Could not verify admin access. Check admin_users table permissions."
-      );
+      if (sessionError) {
+        console.error("Session check failed:", sessionError);
+        return;
+      }
+
+      if (!session) {
+        return;
+      }
+
+      // Avoid accidental duplicate redirects.
+      if (isRedirecting) return;
+
+      isRedirecting = true;
+      submitButton.disabled = true;
+      loginTab.disabled = true;
+      signupTab.disabled = true;
+
+      showMessage("Existing session found. Opening your dashboard...");
+
+      let authorisedAdmin;
+
+      try {
+        authorisedAdmin = await isAuthorisedAdmin(session.user.id);
+      } catch (error) {
+        console.error("Could not verify saved session:", error);
+
+        isRedirecting = false;
+        submitButton.disabled = false;
+        loginTab.disabled = false;
+        signupTab.disabled = false;
+
+        showMessage(
+          "Could not verify your account. Please try logging in again.",
+          true
+        );
+
+        return;
+      }
+
+      if (isRedirecting) {
+        window.location.replace(
+          authorisedAdmin
+            ? "admin/dashboard.html"
+            : "student/dashboard.html"
+        );
+      }
+    } catch (error) {
+      console.error("Session restoration error:", error);
     }
-
-    return Boolean(data);
   }
+
+  // Check saved session before the user logs in again.
+  // The session is not signed out just because the login page opens.
+  restoreExistingSession();
 
   // Login or signup form submission.
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    if (isRedirecting) return;
 
     const userEmail = email.value.trim();
     const userPassword = password.value;
@@ -115,7 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     submitButton.disabled = true;
-    showMessage(isSignup ? "Creating your account..." : "Signing in...");
+
+    showMessage(
+      isSignup ? "Creating your account..." : "Signing in..."
+    );
 
     try {
       if (isSignup) {
@@ -134,20 +218,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (data.user && data.session) {
           await saveStudentProfile(data.user, fullName);
-          showMessage("Account created successfully! Opening your dashboard...");
 
-          window.location.href = "student/dashboard.html";
+          isRedirecting = true;
+
+          showMessage(
+            "Account created successfully! Opening your dashboard..."
+          );
+
+          window.location.replace("student/dashboard.html");
           return;
         }
 
         showMessage(
           "Signup successful! Check your email to confirm your account, then log in."
         );
+
         setMode(false);
         return;
       }
 
-      // Sign in existing account.
+      // Sign in to an existing account.
       const { data, error } =
         await supabaseClient.auth.signInWithPassword({
           email: userEmail,
@@ -162,35 +252,46 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Login failed. Please try again.");
       }
 
-      // Never trust the dropdown alone to grant admin access.
       const authorisedAdmin = await isAuthorisedAdmin(user.id);
 
       if (selectedRole === "admin") {
         if (!authorisedAdmin) {
           await supabaseClient.auth.signOut();
+
           throw new Error(
             "This account is not authorised for Admin access."
           );
         }
 
-        window.location.href = "admin/dashboard.html";
+        isRedirecting = true;
+        window.location.replace("admin/dashboard.html");
         return;
       }
 
       if (authorisedAdmin) {
-        // Admin accounts should use the Admin login option.
+        // Keep admin accounts restricted to the Admin dashboard.
         await supabaseClient.auth.signOut();
+
         throw new Error(
           "This is an authorised Admin account. Please select Admin login."
         );
       }
 
-      window.location.href = "student/dashboard.html";
+      isRedirecting = true;
+      window.location.replace("student/dashboard.html");
     } catch (error) {
       console.error("Authentication error:", error);
-      showMessage(error.message || "Something went wrong. Please try again.", true);
+
+      isRedirecting = false;
+
+      showMessage(
+        error.message || "Something went wrong. Please try again.",
+        true
+      );
     } finally {
-      submitButton.disabled = false;
+      if (!isRedirecting) {
+        submitButton.disabled = false;
+      }
     }
   });
 
